@@ -10,31 +10,41 @@ const register = (req, res) => {
     const email = req.params.email;
     const password = req.params.password;
     const time = Date.now() / 1000;  // unix seconds
+    // this may be unnecessary
 
     // https://github.com/mysqljs/mysql#introduction
-    db.query(`SELECT * WHERE "username"=${username} OR "email"=${email};`, function (error, results, fields) {
-        if (error) throw error;
-        if(results.length != 0) {
-            res.send("failed");
+    db.query(`SELECT * FROM userProfile WHERE "username"=${username} OR "email"=${email};`, function (error, results, fields) {
+        if (error) {
+            res.send("failure");
+        }
+        if(results.length !== 0) {
+            res.send("failure");
         }
     });
 
-    db.query(`INSERT INTO userProfile("username","firstname","lastname","password","email","time") VALUES('${username}','${firstname}','${lastname}','${password}','${email}','${time}')`);
+    // userID and time are automatic I think
+    db.query(`INSERT INTO userProfile("username","firstname","lastname","password","email") VALUES('${username}','${firstname}','${lastname}','${password}','${email}');`, function (error, results, fields) {
+        if (error) {
+          res.send("failure");
+        }
+    });
     res.send("success")
 }
 
 const login = (req, res) => {
     const username = req.params.username;
     const password = req.params.password;
-    db.query(`SELECT * WHERE "username"=${username} AND "password"=${password};`, function (error, results, fields) {
-        if (error) throw error;
+    db.query(`SELECT * FROM userProfile WHERE "username"=${username} AND "password"=${password};`, function (error, results, fields) {
+        if (error) {
+            res.send("failure");
+        }
         if(results.length == 1) {
             cookie = Math.floor(Math.random()*(10**10));
             loggedInCookies[cookie] = username;
             res.cookie("log_in_session", cookie)
             res.send(`success, username is ${username}`);
         } else {
-            res.send(`failed`);
+            res.send(`failure`);
         }
     });
 

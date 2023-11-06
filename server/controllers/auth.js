@@ -4,11 +4,11 @@ const s3Client = require("../config/s3");
 var loggedInCookies = {};
 
 const register = (req, res) => {
-    const username = req.params.username;
-    const firstname = req.params.firstname;
-    const lastname = req.params.lastname;
-    const email = req.params.email;
-    const password = req.params.password;
+    const username = req.body.username;
+    const firstname = req.body.firstname;
+    const lastname = req.body.lastname;
+    const email = req.body.email;
+    const password = req.body.password;
     const time = Date.now() / 1000;  // unix seconds
     // this may be unnecessary
 
@@ -32,8 +32,8 @@ const register = (req, res) => {
 }
 
 const login = (req, res) => {
-    const username = req.params.username;
-    const password = req.params.password;
+    const username = req.body.username;
+    const password = req.body.password;
     db.query(`SELECT * FROM userProfile WHERE "username"=${username} AND "password"=${password};`, function (error, results, fields) {
         if (error) {
             res.send("failure");
@@ -41,8 +41,8 @@ const login = (req, res) => {
         if(results.length == 1) {
             cookie = Math.floor(Math.random()*(10**10));
             loggedInCookies[cookie] = username;
-            res.cookie("log_in_session", cookie)
-            res.send(`success, username is ${username}`);
+            res.cookie("log_in_session", cookie);
+            res.redirect('/');
         } else {
             res.send(`failure`);
         }

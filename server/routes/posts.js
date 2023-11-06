@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { getPosts, getPostsByUser, getPostWithId, deletePostWithId, addPost } = require('../controllers/post.js');
+const { getPosts, getPostsByUser, getPostWithId, deletePostWithId, addPostMulterFields, addPost } = require('../controllers/post.js');
 
 // Database query to get all posts
 router.get('/', getPosts);
@@ -20,7 +20,7 @@ router.get('/:postId', getPostWithId);
 router.delete('/:postId', deletePostWithId);
 
 // Create a new post
-router.post('/', addPost);
+router.post('/', addPostMulterFields, addPost);
 
 // Export the router
 module.exports = router;

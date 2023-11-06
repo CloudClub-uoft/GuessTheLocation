@@ -12,9 +12,6 @@ router.get('/', getUsers);
 // Database query to get the user with id=id
 router.get('/:userId', getUserWithId);
 
-// Create a new user
-router.post('/', createUser);
-
 // Delete user
 router.delete('/:userId', deleteUserWithId);
 

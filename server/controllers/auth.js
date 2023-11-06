@@ -32,8 +32,8 @@ const register = (req, res) => {
 }
 
 const login = (req, res) => {
-    const username = req.params.username;
-    const password = req.params.password;
+    const username = req.body.username;
+    const password = req.body.password;
     db.query(`SELECT * FROM userProfile WHERE "username"=${username} AND "password"=${password};`, function (error, results, fields) {
         if (error) {
             res.send("failure");

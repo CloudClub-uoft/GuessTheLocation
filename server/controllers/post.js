@@ -39,10 +39,19 @@ const deletePostWithId = (req, res) => {
     });
 }
 
-const addPost = (req, res) => {
-    const username = req.params.username;
-    const locationLat = req.params.locationLat;
-    const locationLong = req.params.locationLong;
+// https://www.npmjs.com/package/multer
+const upload = multer({ dest: 'uploads/' });
+
+// const addPostMulterFields = upload.fields({username: "username", locationLat: "locationLat", locationLong: "locationLong", file: "file"});
+const addPostMulterFields = upload.single("file");  // only a single file is uploaded
+
+const addPost = (req, res) => {  // this only accepts multipart/form-data type as post
+    const username = req.body.username;
+    const locationLat = req.body.locationLat;
+    const locationLong = req.body.locationLong;
+    const file = req.file;  // documentation on this seems to be a little hazy
+    
+    file.path;  // this is where the uploaded image is. it should go somewhere in the database but there's no entry for it
     
     db.query(`SELECT userId FROM userProfile WHERE "username"=${username};`, function (error, results, fields) {
         if (error) {

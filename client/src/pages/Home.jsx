@@ -79,72 +79,58 @@ const Home = () => {
       img: "https://images.pexels.com/photos/1761279/pexels-photo-1761279.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     },
   ];
-
-  if (!isLoaded){
-    return (
-      <div className='home'>
-        <div className='posts'>
-          {dummy_posts.map(post => (
-            <div className='post' key={post.id}>
-              <div className='img'>
-                <img src={post.img} alt="" />
-              </div>
-              <div className='content'>
-                <Link to={`/post/${post.id}`}>
-                  <h1>{post.title}</h1>
-                </Link>
-                <p>{post.desc}</p>
-                <button>Make a Guess</button>
-              </div>
+  const commonLoad = (
+    <div className='home'>
+      <div className='posts'>
+        {dummy_posts.map(post => (
+          <div className='post' key={post.id}>
+            <div className='img'>
+              <img src={post.img} alt="" />
             </div>
-          ))}
-        </div>
+            <div className='content'>
+              <Link to={`/post/${post.id}`}>
+                <h1>{post.title}</h1>
+              </Link>
+              <p>{post.desc}</p>
+              <button>Make a Guess</button>
+            </div>
+          </div>
+        ))}
       </div>
-    )
+    </div>
+  )
+  if (!isLoaded){
+    return commonLoad;
   }
   else{
     return(
-      <div className='home'>
-        <div className='posts'>
-          {dummy_posts.map(post => (
-            <div className='post' key={post.id}>
-              <div className='img'>
-                <img src={post.img} alt="" />
-              </div>
-              <div className='content'>
-                <Link to={`/post/${post.id}`}>
-                  <h1>{post.title}</h1>
-                </Link>
-                <p>{post.desc}</p>
-                <button>Make a Guess</button>
-              </div>
+      <>
+        {commonLoad}
+        <div className='home'>
+          <button onClick = {updateCoordinates}> GOOGLE GUESS </button>
+          <GoogleMap 
+            center={markerPosition} 
+            zoom={2.5} 
+            mapContainerClassName='map-container'
+            options={{
+              streetViewControl: false,
+              fullscreenControl: false,
+              minZoom: 2.5,
+            }}
+            onLoad={map => setMap(map)}
+            onClick={onClickMap}
+            > 
+            <Marker key={markerKey} position={markerPosition}/>
+          </GoogleMap>
+          {showCoordinates && (
+            <div>
+              <p>Latitude: {coordinates ? coordinates.lat : ''}</p>
+              <p>Longitude: {coordinates ? coordinates.lng : ''}</p>
             </div>
-          ))}
+          )}
         </div>
-
-        <button onClick = {updateCoordinates}> GOOGLE GUESS </button>
-        <GoogleMap 
-          center={markerPosition} 
-          zoom={2.5} 
-          mapContainerClassName='map-container'
-          options={{
-            streetViewControl: false,
-            fullscreenControl: false,
-            minZoom: 2.5,
-          }}
-          onLoad={map => setMap(map)}
-          onClick={onClickMap}
-          > 
-          <Marker key={markerKey} position={markerPosition}/>
-        </GoogleMap>
-        {showCoordinates && (
-          <div>
-            <p>Latitude: {coordinates ? coordinates.lat : ''}</p>
-            <p>Longitude: {coordinates ? coordinates.lng : ''}</p>
-          </div>
-        )}
-      </div>
-    ) 
+      </>  
+    ); 
   }        
 }
 

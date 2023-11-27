@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import {Link} from 'react-router-dom';
 import { GoogleMap, useJsApiLoader, Marker} from "@react-google-maps/api";
-import style from '../style.scss'
+import style from '../style.scss';
+import axios from 'axios';
+
 
 const Home = () => {
 
@@ -11,12 +13,12 @@ const Home = () => {
   
   const [map,setMap] = useState(/** @type google.maps.Map*/ (null));
   const center = {lat:0,lng:0};
-  const [markerPosition, setMarkerPosition] = useState({lat:44,lng:-80});
+  const [markerPosition, setMarkerPosition] = useState({lat:0,lng:0});
   const [markerKey,setMarkerKey] = useState(0);
   const [coordinates,setCoordinates] = useState(null);
   const [showCoordinates,setShowCoordinates] = useState(false);
 
-  const onClickMap = (e) => {
+  function onClickMap(e){
     setMarkerPosition({
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
@@ -26,9 +28,17 @@ const Home = () => {
     setCoordinates({ lat: e.latLng.lat(), lng: e.latLng.lng() });
   };
 
-  const updateCoordinates = () =>{
+  function updateCoordinates(e){
     setCoordinates(markerPosition);
     setShowCoordinates(true);
+
+
+    e.preventDefault();
+    axios.post('/make_guess',coordinates)
+    .then((res)=>{
+      console.log(res)
+    })
+    .catch((err)=>console.log(err))
   };
   
   
@@ -109,7 +119,7 @@ const Home = () => {
         <div className='home'>
           <button onClick = {updateCoordinates}> GOOGLE GUESS </button>
           <GoogleMap 
-            center={markerPosition} 
+            center={markerPosition}
             zoom={2.5} 
             mapContainerClassName='map-container'
             options={{
@@ -120,7 +130,7 @@ const Home = () => {
             onLoad={map => setMap(map)}
             onClick={onClickMap}
             > 
-            <Marker key={markerKey} position={markerPosition}/>
+            <Marker key={markerKey} position={markerKey?markerPosition:{lat:null,lng:null}}/>
           </GoogleMap>
           {showCoordinates && (
             <div>

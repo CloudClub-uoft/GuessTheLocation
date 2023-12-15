@@ -18,7 +18,7 @@ const Home = () => {
   const [coordinates,setCoordinates] = useState(null);
   const [showCoordinates,setShowCoordinates] = useState(false);
 
-  function onClickMap(e){
+  const onClickMap = (e) => {
     setMarkerPosition({
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
@@ -28,7 +28,7 @@ const Home = () => {
     setCoordinates({ lat: e.latLng.lat(), lng: e.latLng.lng() });
   };
 
-  function updateCoordinates(e){
+  const updateCoordinates = (e) =>{
     setCoordinates(markerPosition);
     setShowCoordinates(true);
 

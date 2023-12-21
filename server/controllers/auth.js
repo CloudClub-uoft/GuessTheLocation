@@ -11,27 +11,31 @@ const register = (req, res) => {
     const password = req.body.password;
     const time = Date.now() / 1000;  // unix seconds
     // this may be unnecessary
-
+    
     // https://github.com/mysqljs/mysql#introduction
-    db.query(`SELECT * FROM user_profile WHERE "username"=${username} OR "email"=${email};`, function (error, results, fields) {
+    db.query(`SELECT * FROM user_profile WHERE username='${username}' OR email='${email}';`, function (error, results, fields) {
         if (error) {
-		res.end("failure");
-		return;
+	    res.end("failure");
+            return;
         }
-        if(results.length !== 0) {
+        if(results.length != 0) {  // due to javascript 0 shenanigans, 1 !== 0 behaves weirdly? using != instead
             res.end("failure");
+            return;
         }
-    });
 
-    console.log(`INSERT INTO user_profile (username,firstname,lastname,password,email) VALUES ("${username}","${firstname}","${lastname}","${password}","${email}");`);
+        // sequential
+        // userID and time are automatic I think
+        db.query(`INSERT INTO user_profile (username,firstname,lastname,password,email,emailVerified) VALUES ('${username}','${firstname}','${lastname}','${password}','${email}',false);`, function (error, results, fields) {
+            if (error) {
+                console.log(error);  // should I log all command failures? they shouldn't happen
+                res.end("failure");
+                return;
+            }
 
-    // userID and time are automatic I think
-    db.query(`INSERT INTO user_profile (username,firstname,lastname,password,email) VALUES ('${username}','${firstname}','${lastname}','${password}','${email}');`, function (error, results, fields) {
-        if (error) {
-          res.end("failure");
-        }
+            res.end("success");
+        });
+
     });
-    res.end("success")
 }
 
 const login = (req, res) => {

@@ -1,12 +1,21 @@
-// Establish MySQL database connection
-const mysql = require("mysql");
+// // Establish MySQL database connection
 
-const db = mysql.createConnection({
+// import mysql from "mysql";
+
+// export const db = mysql.createConnection({
+//     host: "localhost",
+//     user: "root",
+//     password: "",
+//     database: "GuessTheLocation"
+// })
+
+const mysql = require ('mysql')
+const connection = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
-    database: "GuessTheLocation"
-})
+    database: process.env.DB_NAME
+});
 
 connection.connect((err) => {
     if (err) {

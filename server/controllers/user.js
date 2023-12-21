@@ -13,20 +13,27 @@ const getUsers = (req, res) => {
 }
 
 const getUserWithId = (req, res) => {
-    db.query(`SELECT * FROM user_profile WHERE userID = ${req.params.postId};`, function (error, results, fields) {
+    db.query(`SELECT * FROM user_profile WHERE userID = ${req.params.userId};`, function (error, results, fields) {
         if (error) {
-          res.send("failure");
+            console.log(error);
+            res.end("failure");
+        } else if (results.length == 0) {
+            res.end("failure");  // userID doesn't exist
+        } else {
+            res.end(JSON.stringify(results[0]));
         }
-        res.send(JSON.stringify(results[0]));
+        
     });
 }
 
 const deleteUserWithId = (req, res) => {
-    db.query(`DELETE FROM user_profile WHERE userID = ${req.params.postId};`, function (error, results, fields) {
+    db.query(`DELETE FROM user_profile WHERE userID = ${req.params.userId};`, function (error, results, fields) {
         if (error) {
-          res.send("failure");
+            console.log(error);
+            res.end("failure");
+        } else {
+            res.end("success");
         }
-        res.send("success");
     });
 }
 

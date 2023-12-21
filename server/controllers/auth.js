@@ -13,30 +13,33 @@ const register = (req, res) => {
     // this may be unnecessary
 
     // https://github.com/mysqljs/mysql#introduction
-    db.query(`SELECT * FROM userProfile WHERE "username"=${username} OR "email"=${email};`, function (error, results, fields) {
+    db.query(`SELECT * FROM user_profile WHERE "username"=${username} OR "email"=${email};`, function (error, results, fields) {
         if (error) {
-            res.send("failure");
+		res.end("failure");
+		return;
         }
         if(results.length !== 0) {
-            res.send("failure");
+            res.end("failure");
         }
     });
 
+    console.log(`INSERT INTO user_profile (username,firstname,lastname,password,email) VALUES ("${username}","${firstname}","${lastname}","${password}","${email}");`);
+
     // userID and time are automatic I think
-    db.query(`INSERT INTO userProfile("username","firstname","lastname","password","email") VALUES('${username}','${firstname}','${lastname}','${password}','${email}');`, function (error, results, fields) {
+    db.query(`INSERT INTO user_profile (username,firstname,lastname,password,email) VALUES ('${username}','${firstname}','${lastname}','${password}','${email}');`, function (error, results, fields) {
         if (error) {
-          res.send("failure");
+          res.end("failure");
         }
     });
-    res.send("success")
+    res.end("success")
 }
 
 const login = (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
-    db.query(`SELECT * FROM userProfile WHERE "username"=${username} AND "password"=${password};`, function (error, results, fields) {
+    db.query(`SELECT * FROM user_profile WHERE "username"=${username} AND "password"=${password};`, function (error, results, fields) {
         if (error) {
-            res.send("failure");
+            res.end("failure");
         }
         if(results.length == 1) {
             cookie = Math.floor(Math.random()*(10**10));
@@ -44,16 +47,16 @@ const login = (req, res) => {
             res.cookie("log_in_session", cookie);
             res.redirect('/');
         } else {
-            res.send(`failure`);
+            res.end(`failure`);
         }
     });
 
-    res.send("login");
+    res.end("login");
 }
 
 const logout = (req, res) => {
     delete loggedInCookies[req.cookies.log_in_session];
-    res.send("logout");
+    res.end("logout");
 }
 
 module.exports = {

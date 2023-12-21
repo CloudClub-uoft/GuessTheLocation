@@ -53,7 +53,7 @@ const addPost = (req, res) => {  // this only accepts multipart/form-data type a
     
     file.path;  // this is where the uploaded image is. it should go somewhere in the database but there's no entry for it
     
-    db.query(`SELECT userId FROM userProfile WHERE "username"=${username};`, function (error, results, fields) {
+    db.query(`SELECT userId FROM user_profile WHERE "username"=${username};`, function (error, results, fields) {
         if (error) {
             res.send("failure");
         }

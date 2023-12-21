@@ -11,8 +11,8 @@ const getUserWithId = (req, res) => {
 }
 
 const createUser = (req, res) => {
-const userId = req.params.userId;
-res.send(`Details of post ${userId}`);
+    const userId = req.params.userId;
+    res.send(`Details of post ${userId}`);
 }
 
 const deleteUserWithId = (req, res) => {

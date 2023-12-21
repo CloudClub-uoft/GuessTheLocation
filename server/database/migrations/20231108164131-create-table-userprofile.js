@@ -18,13 +18,14 @@ exports.up = function(db, callback) {
   db.createTable(
     "user_profile",
     {
-      userID: { type: "int", notNull: true },
+      /* this is a temporary change, don't merge */
+      userID: { type: "int", primaryKey: true, notNull: true, autoIncrement: true },
       username: { type: "string", notNull: true },
       email: { type: "string", notNull: true },
       firstName: { type: "string", notNull: true },
       lastName: { type: "string", notNull: true },
       password: { type: "string", notNull: true },
-      registrationTime: { type: "timestamp", notNull: true },
+      registrationTime: { type: "timestamp", notNull: true, defaultValue: new String('CURRENT_TIMESTAMP') },
       emailVerified: { type: "boolean", notNull: true }
     },
     callback

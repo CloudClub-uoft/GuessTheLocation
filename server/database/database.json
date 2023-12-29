@@ -4,7 +4,7 @@
         "host": { "ENV" : "DB_HOST" },
         "user": { "ENV" : "DB_USER" },
         "password" : { "ENV" : "DB_PASS" },
-        "database": "GuessTheLocation",
+        "database": { "ENV" : "DB_NAME" },
         "driver": "mysql",        
         "multipleStatements": true
     },
@@ -12,7 +12,7 @@
         "host": { "ENV" : "DB_HOST" },
         "user": { "ENV" : "DB_USER" },
         "password" : { "ENV" : "DB_PASS" },
-        "database": "GuessTheLocation",
+        "database": { "ENV" : "DB_NAME" },
         "driver": "mysql",        
         "multipleStatements": true
     }

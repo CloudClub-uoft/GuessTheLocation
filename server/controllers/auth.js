@@ -13,10 +13,12 @@ const register = (req, res) => {
     // https://github.com/mysqljs/mysql#introduction
     db.query(`SELECT * FROM user_profile WHERE username='${username}' OR email='${email}';`, function (error, results, fields) {
         if (error) {
+            res.status(400);
 	    res.end("failure");
             return;
         }
         if(results.length != 0) {  // due to javascript 0 shenanigans, 1 !== 0 behaves weirdly? using != instead
+            res.status(400);
             res.end("failure");
             return;
         }
@@ -26,6 +28,7 @@ const register = (req, res) => {
         db.query(`INSERT INTO user_profile (username,firstname,lastname,password,email,emailVerified) VALUES ('${username}','${firstname}','${lastname}','${password}','${email}',false);`, function (error, results, fields) {
             if (error) {
                 console.log(error);  // should I log all command failures? they shouldn't happen
+                res.status(400);
                 res.end("failure");
                 return;
             }
@@ -41,12 +44,14 @@ const login = (req, res) => {
     const password = req.body.password;
     db.query(`SELECT * FROM user_profile WHERE "username"=${username} AND "password"=${password};`, function (error, results, fields) {
         if (error) {
+            res.status(400);
             res.end("failure");
         }
         if(results.length == 1) {
             // create cookie here
         } else {
-            res.end(`failure`);
+            res.status(400);
+            res.end("failure");
         }
     });
 

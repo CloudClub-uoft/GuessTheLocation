@@ -5,6 +5,7 @@ const multer  = require('multer');
 const getPosts = (req, res) => {
     db.query(`SELECT * FROM post;`, function (error, results, fields) {
         if (error) {
+            res.status(400);
             res.send("failure");
         }
         res.send(JSON.stringify(results));
@@ -14,6 +15,7 @@ const getPosts = (req, res) => {
 const getPostsByUser = (req, res) => {
     db.query(`SELECT * FROM post WHERE userID = ${req.params.userId};`, function (error, results, fields) {
         if (error) {
+            res.status(400);
             res.send("failure");
         }
         res.send(JSON.stringify(results));
@@ -24,6 +26,7 @@ const getPostsByUser = (req, res) => {
 const getPostWithId = (req, res) => {
     db.query(`SELECT * FROM post WHERE postID = ${req.params.postId};`, function (error, results, fields) {
         if (error) {
+            res.status(400);
             res.send("failure");
         }
         res.send(JSON.stringify(results[0]));
@@ -33,6 +36,7 @@ const getPostWithId = (req, res) => {
 const deletePostWithId = (req, res) => {
     db.query(`DELETE FROM post WHERE postID = ${req.params.postId};`, function (error, results, fields) {
         if (error) {
+            res.status(400);
             res.send("failure");
         }
         res.send("success");
@@ -55,12 +59,14 @@ const addPost = (req, res) => {  // this only accepts multipart/form-data type a
     
     db.query(`SELECT userId FROM user_profile WHERE "username"=${username};`, function (error, results, fields) {
         if (error) {
+            res.status(400);
             res.send("failure");
         }
         const userID = results[0].userID;
         // postID and time should be automatic I think?
         db.query(`INSERT INTO post("userID","locationLat","locationLong") VALUES('${userID}','${locationLat}','${locationLong}');`, function (error, results, fields) {
             if (error) {
+                res.status(400);
                 res.send("failure");
             }
             res.send("success");

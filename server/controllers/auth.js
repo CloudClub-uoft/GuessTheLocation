@@ -1,8 +1,6 @@
 const db = require('../config/db');
 const s3Client = require("../config/s3");
 
-var loggedInCookies = {};
-
 const register = (req, res) => {
     const username = req.body.username;
     const firstname = req.body.firstname;
@@ -46,10 +44,7 @@ const login = (req, res) => {
             res.end("failure");
         }
         if(results.length == 1) {
-            cookie = Math.floor(Math.random()*(10**10));
-            loggedInCookies[cookie] = username;
-            res.cookie("log_in_session", cookie);
-            res.redirect('/');
+            // create cookie here
         } else {
             res.end(`failure`);
         }
@@ -59,7 +54,7 @@ const login = (req, res) => {
 }
 
 const logout = (req, res) => {
-    delete loggedInCookies[req.cookies.log_in_session];
+    // remove cookie here
     res.end("logout");
 }
 

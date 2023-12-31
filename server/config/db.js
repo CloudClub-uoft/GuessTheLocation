@@ -1,28 +1,30 @@
-// // Establish MySQL database connection
+const mysql = require("mysql2")
 
-// import mysql from "mysql";
+// Connection Pool
+var dbConfig = {
+	host: process.env.DB_HOST,
+	user: process.env.DB_USER,
+	password: process.env.DB_PASS,
+	database: process.env.DB_NAME,
+	port: process.env.DB_PORT,
+	connectionLimit: 50,
+	queueLimit: 0,
+	waitForConnections: true,
+	charset: "utf8mb4",
+}
+var database = mysql.createPool(dbConfig)
+database.getConnection((err, conn) => {
+	if (err) throw err
+	conn.ping((err2) => {
+		conn.release()
+		if (err2) {
+			throw err2
+		} else {
+			console.log(
+				`Connected to MySQL database at '${process.env.DB_HOST}:${process.env.DB_PORT}' as user '${process.env.DB_USER}'`
+			)
+		}
+	})
+})
 
-// export const db = mysql.createConnection({
-//     host: "localhost",
-//     user: "root",
-//     password: "",
-//     database: "GuessTheLocation"
-// })
-
-const mysql = require ('mysql')
-const connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME
-});
-
-connection.connect((err) => {
-    if (err) {
-      console.error('Error connecting to database:', err);
-      return;
-    }
-    console.log('Connected to MySQL database');
-});
-
-module.exports = connection;
+module.exports = database

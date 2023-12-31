@@ -4,16 +4,14 @@ const express = require('express');
 const db = require('../config/db').default;
 const router = express.Router();
 
-const { getUsers, getUserWithId, createUser, deleteUserWithId } = require('../controllers/user.js');
+// isn't there an import all function?? anything's better than changing 2 places at once...
+const { getUsers, getUserWithId, deleteUserWithId } = require('../controllers/user.js');
 
 // Database query to get all users
 router.get('/', getUsers);
 
 // Database query to get the user with id=id
 router.get('/:userId', getUserWithId);
-
-// Create a new user
-router.post('/', createUser);
 
 // Delete user
 router.delete('/:userId', deleteUserWithId);

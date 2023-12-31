@@ -2,15 +2,65 @@ const db = require('../config/db');
 const s3Client = require("../config/s3");
 
 const register = (req, res) => {
-    res.send("register");
+    const username = req.body.username;
+    const firstname = req.body.firstname;
+    const lastname = req.body.lastname;
+    const email = req.body.email;
+    const password = req.body.password;
+    const time = Date.now() / 1000;  // unix seconds
+    // this may be unnecessary
+    
+    // https://github.com/mysqljs/mysql#introduction
+    db.query(`SELECT * FROM user_profile WHERE username='${username}' OR email='${email}';`, function (error, results, fields) {
+        if (error) {
+            res.status(400);
+	    res.end("failure");
+            return;
+        }
+        if(results.length != 0) {  // due to javascript 0 shenanigans, 1 !== 0 behaves weirdly? using != instead
+            res.status(400);
+            res.end("failure");
+            return;
+        }
+
+        // sequential
+        // userID and time are automatic I think
+        db.query(`INSERT INTO user_profile (username,firstname,lastname,password,email,emailVerified) VALUES ('${username}','${firstname}','${lastname}','${password}','${email}',false);`, function (error, results, fields) {
+            if (error) {
+                console.log(error);  // should I log all command failures? they shouldn't happen
+                res.status(400);
+                res.end("failure");
+                return;
+            }
+
+            res.end("success");
+        });
+
+    });
 }
 
 const login = (req, res) => {
-    res.send("login");
+    const username = req.body.username;
+    const password = req.body.password;
+    db.query(`SELECT * FROM user_profile WHERE "username"=${username} AND "password"=${password};`, function (error, results, fields) {
+        if (error) {
+            res.status(400);
+            res.end("failure");
+        }
+        if(results.length == 1) {
+            // create cookie here
+        } else {
+            res.status(400);
+            res.end("failure");
+        }
+    });
+
+    res.end("login");
 }
 
 const logout = (req, res) => {
-    res.send("logout");
+    // remove cookie here
+    res.end("logout");
 }
 
 module.exports = {
@@ -18,3 +68,4 @@ module.exports = {
     login,
     logout,
 }
+

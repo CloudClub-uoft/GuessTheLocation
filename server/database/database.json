@@ -5,6 +5,7 @@
         "user": { "ENV" : "DB_USER" },
         "password" : { "ENV" : "DB_PASS" },
         "database": { "ENV" : "DB_NAME" },
+        "port": { "ENV" : "DB_PORT" },
         "driver": "mysql",        
         "multipleStatements": true
     },
@@ -13,6 +14,7 @@
         "user": { "ENV" : "DB_USER" },
         "password" : { "ENV" : "DB_PASS" },
         "database": { "ENV" : "DB_NAME" },
+        "port": { "ENV" : "DB_PORT" },
         "driver": "mysql",        
         "multipleStatements": true
     }

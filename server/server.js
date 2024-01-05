@@ -1,4 +1,5 @@
 const express = require('express');
+const express_session = require('express-session');
 require("dotenv").config();
 const app = express();
 //const cors = require('cors')
@@ -6,6 +7,11 @@ const app = express();
 //app.use(cors());
 app.use(express.json()); // Parse JSON request bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
+app.use(express_session({
+    secret: process.env.EXPRESS_SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
+}));
 
 // TODO: Configure database connections, authentication, and other application-level settings
 

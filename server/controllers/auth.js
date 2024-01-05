@@ -48,25 +48,48 @@ const login = (req, res) => {
             return res.status(500).json({ error: "Internal Server Error." });
         }
         if(results.length === 1) {
-            console.log("success, starting session now");
-            // create cookie here
-
-            // login successful
-            return res.status(200).json({ message: "Login Successful!" });;
-            
+            const userid = results[0].userID;
+            // https://www.npmjs.com/package/express-session
+            req.session.regenerate(function (err) {
+                if (err) {
+                    return res.status(500).json({ error: "Internal Server Error." });
+                }
+                req.session.user = userID;
+                req.session.save(function (err) {
+                    if (err) {
+                        return res.status(500).json({ error: "Internal Server Error." });
+                    }
+                    return res.redirect('/');
+                });
+            });
         } else {
-            console.log("WRONG PASSWORD!!!!!!")
             return res.status(400).json({ error: "Password Incorrect or multiple user entries." });
         }
     });
 }
 
 const logout = (req, res) => {
-    // remove cookie here
-    res.end("logout");
+    req.session.user = null;
+    req.session.save(function (err) {
+        if (err) {
+            return res.status(500).json({ error: "Internal Server Error." });
+        }
+
+        req.session.regenerate(function (err) {
+            if (err) {
+                return res.status(500).json({ error: "Internal Server Error." });
+            }
+            res.redirect('/');
+        })
+    })
+}
+
+const loggedUser = (req, res) => {
+    return res.status(200).json({userID: req.session.user});
 }
 
 module.exports = {
+    loggedUser,
     register,
     login,
     logout,

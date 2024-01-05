@@ -13,32 +13,26 @@ const register = (req, res) => {
     // https://github.com/mysqljs/mysql#introduction
     db.query(`SELECT * FROM user_profile WHERE username='${username}' OR email='${email}';`, function (error, results, fields) {
         if (error) {
-            res.status(400);
-	    res.end("failure");
-            return;
+            return res.status(500).json({ error: "Internal Server Error." });
         }
         if(results.length != 0) {  // due to javascript 0 shenanigans, 1 !== 0 behaves weirdly? using != instead
-            res.status(400);
-            res.end("failure");
-            return;
+            return res.status(400).json({ error: "User already exists" });
         }
 
         // sequential
         // userID and time are automatic I think
         db.query(`INSERT INTO user_profile (username,firstname,lastname,password,email,emailVerified) VALUES ('${username}','${firstname}','${lastname}','${password}','${email}',false);`, function (error, results, fields) {
             if (error) {
-                console.log(error);  // should I log all command failures? they shouldn't happen
-                res.status(400);
-                res.end("failure");
-                return;
+                return res.status(500).json({ error: "Internal Server Error." });
             }
 
-            res.end("success");
+            return res.status(200).json({ message: "Login Successful!" });;
         });
 
     });
 }
 
+// login and logout will redirect user to /, rather than return an htp status
 const login = (req, res) => {
     const username = req.body.username;
     const password = req.body.password;

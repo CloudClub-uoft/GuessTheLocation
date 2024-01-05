@@ -8,10 +8,10 @@ const insert_coords = (req,res)=>{
     ]
     connection.query(sql,values,(err,result)=>{
       if (err){
-        return res.json({messsage: 'Something unexpected has occured' + err});
+        return res.status(500).json({message: 'Something unexpected has occured' + err});
       }
       else{
-        return res.json({success: "Coordinates added successfully"});
+        return res.status(200).json({success: "Coordinates added successfully"});
       }
     })
 };

@@ -42,20 +42,23 @@ const register = (req, res) => {
 const login = (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
-    db.query(`SELECT * FROM user_profile WHERE "username"=${username} AND "password"=${password};`, function (error, results, fields) {
+    // TODO: need to hash the password
+    db.query(`SELECT * FROM guessthelocation.user_profile WHERE username='${username}' AND password='${password}';`, function (error, results, fields) {
         if (error) {
-            res.status(400);
-            res.end("failure");
+            return res.status(500).json({ error: "Internal Server Error." });
         }
-        if(results.length == 1) {
+        if(results.length === 1) {
+            console.log("success, starting session now");
             // create cookie here
+
+            // login successful
+            return res.status(200).json({ message: "Login Successful!" });;
+            
         } else {
-            res.status(400);
-            res.end("failure");
+            console.log("WRONG PASSWORD!!!!!!")
+            return res.status(400).json({ error: "Password Incorrect or multiple user entries." });
         }
     });
-
-    res.end("login");
 }
 
 const logout = (req, res) => {

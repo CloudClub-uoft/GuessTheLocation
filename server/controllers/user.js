@@ -25,6 +25,9 @@ const getUserWithId = (req, res) => {
 }
 
 const deleteUserWithId = (req, res) => {
+    if (req.session.user != req.params.userId) {
+        res.status(401).json( {error: "Unauthorized to delete user"} );
+    }
     db.query(`DELETE FROM user_profile WHERE userID = ${req.params.userId};`, function (error, results, fields) {
         if (error) {
             return res.status(500).json({ error: "Internal Server Error." });

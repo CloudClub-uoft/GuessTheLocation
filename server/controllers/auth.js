@@ -48,12 +48,12 @@ const login = (req, res) => {
                 if (err) {
                     return res.status(500).json({ error: "Internal Server Error." });
                 }
-                req.session.user = userID;
+                req.session.user = userid;
                 req.session.save(function (err) {
                     if (err) {
                         return res.status(500).json({ error: "Internal Server Error." });
                     }
-                    return res.redirect('/');
+                    return res.redirect('/auth/loggedUser');
                 });
             });
         } else {

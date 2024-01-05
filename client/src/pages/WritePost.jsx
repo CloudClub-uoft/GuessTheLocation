@@ -20,7 +20,9 @@ const WritePost = () => {
           <label htmlFor="file">Upload Image</label>
           <div className="buttons">
             <button>Save as draft</button>
-            <button>Upload Image</button>
+
+            {/**onclick */}
+            <button>Upload Image</button> 
           </div>
         </div>
         <div className='item'>

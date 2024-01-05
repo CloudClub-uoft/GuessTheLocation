@@ -1,8 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Link} from 'react-router-dom';
+import { GoogleMap, useJsApiLoader, Marker} from "@react-google-maps/api";
+import style from '../style.scss';
+import axios from 'axios';
+
 
 const Home = () => {
 
+  const {isLoaded} = useJsApiLoader({
+    googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
+  })
+  
+  const [map,setMap] = useState(/** @type google.maps.Map*/ (null));
+  const center = {lat:0,lng:0};
+  const [markerPosition, setMarkerPosition] = useState({lat:0,lng:0});
+  const [markerKey,setMarkerKey] = useState(0);
+  const [coordinates,setCoordinates] = useState(null);
+  const [showCoordinates,setShowCoordinates] = useState(false);
+
+  const onClickMap = (e) => {
+    setMarkerPosition({
+      lat: e.latLng.lat(),
+      lng: e.latLng.lng(),
+    });
+    setMarkerKey(markerKey + 1);
+    setShowCoordinates(false);
+    setCoordinates({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+  };
+
+  const updateCoordinates = (e) =>{
+    setCoordinates(markerPosition);
+    setShowCoordinates(true);
+
+
+    e.preventDefault();
+    axios.post('/make_guess',coordinates)
+    .then((res)=>{
+      console.log(res)
+    })
+    .catch((err)=>console.log(err))
+  };
+  
+  
   // For the actual website we'll make a call to the backend to get images dynamically
   const dummy_posts = [
     {
@@ -50,8 +89,7 @@ const Home = () => {
       img: "https://images.pexels.com/photos/1761279/pexels-photo-1761279.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     },
   ];
-
-  return (
+  const commonLoad = (
     <div className='home'>
       <div className='posts'>
         {dummy_posts.map(post => (
@@ -66,12 +104,45 @@ const Home = () => {
               <p>{post.desc}</p>
               <button>Make a Guess</button>
             </div>
-
           </div>
         ))}
       </div>
     </div>
   )
+  if (!isLoaded){
+    return commonLoad;
+  }
+  else{
+    return(
+      <>
+        {commonLoad}
+        <div className='home'>
+          <button onClick = {updateCoordinates}> GOOGLE GUESS </button>
+          <GoogleMap 
+            center={markerPosition}
+            zoom={2.5} 
+            mapContainerClassName='map-container'
+            options={{
+              streetViewControl: false,
+              fullscreenControl: false,
+              minZoom: 2.5,
+            }}
+            onLoad={map => setMap(map)}
+            onClick={onClickMap}
+            > 
+            <Marker key={markerKey} position={markerKey?markerPosition:{lat:null,lng:null}}/>
+          </GoogleMap>
+          {showCoordinates && (
+            <div>
+              <p>Latitude: {coordinates ? coordinates.lat : ''}</p>
+              <p>Longitude: {coordinates ? coordinates.lng : ''}</p>
+            </div>
+          )}
+        </div>
+      </>  
+    ); 
+  }        
 }
 
 export default Home;
+

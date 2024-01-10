@@ -1,5 +1,23 @@
 # GuessTheLocation
 
+## Our Website
+### "Guess My Location" is a web-based interactive online game that allows users to upload pictures of various locations.
+
+### Once you create an account, you are able to post pictures and participate in the guessing process. 
+![Login Page](images/login.png)
+
+### You will be able to share your post through our embedded Google Maps.
+![Share Post](images/google_maps.png)
+
+### In addition, you can easily track and delete your posts if needed through the "My Posts" page.
+![My Posts](images/personal_posts.png)
+
+### You can also view other people's posts and participate in guessing their location through an interactive Google Maps.
+<img src="images/community.png" width="550" height="410">
+<img src="images/guess.png" width="550" height="410">
+
+### A leaderboard is also available for ranking among players.
+![Leaderboard](images/leaderboard.png)
 
 ## Local Development
 1. Clone this repository

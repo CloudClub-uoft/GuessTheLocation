@@ -1,11 +1,22 @@
 $lightGreen: #b9e7e7;
 
+@font-face {
+  font-family: "Jura";
+  src:
+    //local("Jura"),
+    url(./fonts/Jura-Regular.ttf) format("truetype");
+}
+@font-face{
+  font-family: "Bungee";
+  src:
+    url(./fonts/Bungee-Regular.ttf) format("truetype");
+}
+
 .app {
   display: flex;
   justify-content: center;
   .container {
     width: 1024px;
-
     .link {
       text-decoration: none;
       color: inherit;
@@ -70,6 +81,30 @@ $lightGreen: #b9e7e7;
   // NAVBAR
 
   .navbar {
+    display:flex;
+    width:90vw;
+    border:10px solid black;
+    height:4vw;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    
+    .logo{
+      
+
+    }
+    .about-button{
+      
+    }
+
+    .github-button{
+
+    }
+    .signin-button{
+      
+    }
+    
+    /*
     .container {
       padding: 10px 0px;
       display: flex;
@@ -113,6 +148,7 @@ $lightGreen: #b9e7e7;
         }
       }
     }
+    */
   }
 
   // FOOTER
@@ -128,9 +164,178 @@ $lightGreen: #b9e7e7;
     }
   }
 
-  .map-container{
+  .map-container {
     width: 800px;
     height: 1000px;
+  }
+
+  //POSTCARD COMPONENT
+  .home-posts {
+    //transform: scale(100%);
+    height: 654px;
+    width: 759px;
+    .home-posts-group {
+      height: 654px;
+      left: 0;
+      position: sticky;
+      top: 0;
+      width: 759px;
+      .overlap-group {
+        height: 654px;
+        position: relative;
+        width: 763px;
+        .rectangle {
+          background-color: #eaeaea;
+          border-radius: 20px;
+          box-shadow: 0px 10px 10px #00000040;
+          height: 654px;
+          left: 0;
+          position: relative;
+          top: 0;
+          width: 758px;
+          .text-wrapper {
+            color: #000000;
+            font-family: "Jura";
+            font-size: 45px;
+            font-weight: 700;
+            left: 30px;
+            letter-spacing: 0;
+            line-height: normal;
+            position: absolute;
+            top: 577px;
+          }
+          .text-wrapper-2 {
+            color: #000000;
+            font-family: "Jura";
+            font-size: 45px;
+            font-weight: 700;
+            right: 30px;
+            letter-spacing: 0;
+            line-height: normal;
+            position: absolute;
+            top: 577px;
+          }
+        }
+        .image {
+          height: 545px;
+          left: 0;
+          object-fit: cover;
+          position: absolute;
+          top: 0;
+          width: 758px;
+          border-radius: 20px;
+        }
+      }
+    }
+  }
+  //HOME LOGIN CARD COMPONENT
+  .login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 40px;
+    align-items: center;
+    .login-card-box {
+      position: relative;
+      background-color: #ffffff;
+      border-radius: 40px;
+      box-shadow: 0px 4px 4px #00000040;
+      height: 518px;
+      width: 953px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      row-gap: 20px;
+      //transform: scale(50%);
+
+      .email-label {
+        position:relative;
+        color: #000000;
+        left: 48px;
+        font-family: "Jura";
+        font-size: 35px;
+        font-weight: 700;
+        letter-spacing: 0;
+        line-height: normal;
+      }
+      .email-input {
+        background-color: #eaeaea;
+        top: 100px;
+        height: 70px;
+        left: 43px;
+        width: 862px;
+        border-radius: 10px;
+        border: 0px;
+        font-family: "Jura";
+        font-size: 35px;
+        font-weight: 700;
+        align-self: center;
+      }
+      .username-label {
+        position: relative;
+        color: #000000;
+        left: 48px;
+        font-family: "Jura";
+        font-size: 35px;
+        font-weight: 700;
+        letter-spacing: 0;
+        line-height: normal;
+        font-size: 35px;
+        font-weight: 700;
+      }
+      .username-input {
+        background-color: #eaeaea;
+        top: 240px;
+        left: 43px;
+        height: 70px;
+        width: 862px;
+        border-radius: 10px;
+        border: 0px;
+        outline: none;
+        font-family: "Jura";
+        font-size: 35px;
+        font-weight: 700;
+        align-self: center;
+      }
+      .pass-label {
+        position: relative;
+        color: #000000;
+        left: 48px;
+        font-family: "Jura";
+        font-size: 35px;
+        font-weight: 700;
+        letter-spacing: 0;
+        line-height: normal;
+        align-self:flex-start;
+      }
+      .password-input {
+        background-color: #eaeaea;
+        height: 70px;
+        width: 862px;
+        outline: none;
+        border-radius: 10px;
+        border:0px;
+        font-family: "Jura";
+        font-size: 50px;
+        align-self:center;
+      }
+    }
+    .signup-button {
+      height: 80px;
+      width: 290px;
+      background-color: #ffffff;
+      border-radius: 20px;
+      border: 0px;
+      box-shadow: 0px 4px 4px #00000040;
+      font-family: "Bungee";
+      font-size: 35px;
+      font-weight: 700;
+      padding: 0px;
+      line-height: 0px
+    }
+    .signup-button:active{
+      transform: scale(0.96);
+    }
   }
 
   // HOME PAGE

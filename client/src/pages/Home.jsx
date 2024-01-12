@@ -3,6 +3,36 @@ import {Link} from 'react-router-dom';
 import { GoogleMap, useJsApiLoader, Marker} from "@react-google-maps/api";
 import style from '../style.scss';
 import axios from 'axios';
+import HomePostCard from '../components/HomePostCard';
+import HomeLoginCard from '../components/HomeLoginCard';
+
+
+
+
+const HomePostCardTest = () =>{
+  let at = '@';
+  let user = 'insert_user';
+  let userString = at.concat(user);
+
+  let postDate = "10/12/2100";
+  
+  return (
+    <div className='home'>
+      <HomePostCard
+        username = {userString}
+        date = {postDate}
+      />
+    </div>
+  )
+}
+
+const HomeLoginCardTest = () =>{
+  return(
+    <div className='test'>
+      <HomeLoginCard/>
+    </div>
+  )
+}
 
 
 const Home = () => {
@@ -11,7 +41,7 @@ const Home = () => {
     googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
   })
   
-  const [map,setMap] = useState(/** @type google.maps.Map*/ (null));
+  const [map,setMap] = useState((null));
   const center = {lat:0,lng:0};
   const [markerPosition, setMarkerPosition] = useState({lat:0,lng:0});
   const [markerKey,setMarkerKey] = useState(0);
@@ -144,5 +174,5 @@ const Home = () => {
   }        
 }
 
-export default Home;
+export default HomeLoginCardTest;
 

@@ -8,6 +8,12 @@ import HomeLoginCard from '../components/HomeLoginCard';
 
 
 
+const nothing = () =>
+{
+  return(
+    <></>
+  )
+}
 
 const HomePostCardTest = () =>{
   let at = '@';
@@ -174,5 +180,5 @@ const Home = () => {
   }        
 }
 
-export default HomeLoginCardTest;
+export default nothing;
 

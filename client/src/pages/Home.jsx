@@ -7,7 +7,6 @@ import HomePostCard from '../components/HomePostCard';
 import HomeSignupCard from '../components/HomeSignupCard';
 
 
-
 const nothing = () =>
 {
   return(
@@ -39,7 +38,7 @@ const HomeSignupCardTest = () =>{
   )
 }
 
-const NewHome = () =>{
+const Home = () =>{
   
   let user1 = 'tester_111';
   let user2 = 'tester_123';
@@ -53,6 +52,7 @@ const NewHome = () =>{
 
 
   return(
+    
     <div className='new-home-page'>
       <div className='title-bar'>
         <div className='text-wrapper'>
@@ -201,7 +201,7 @@ const OldHome = () => {
     return(
       <>
         {commonLoad}
-        <div className='home'>
+        <div className='home2'>
           <button onClick = {updateCoordinates}> GOOGLE GUESS </button>
           <GoogleMap 
             center={markerPosition}
@@ -229,5 +229,5 @@ const OldHome = () => {
   }        
 }
 
-export default NewHome;
+export default Home;
 

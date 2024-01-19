@@ -31,10 +31,11 @@ const OldNavbar = () =>{
 const Navbar = () => {
   
   return (
-    //about button does not link to anything yet, there is not page that exists
     <div className="navbar">
-      <a className='about-button'>ABOUT</a>
-      <a href='https://github.com/CloudClub-uoft/GuessTheLocation' target = '_blank' className='github-button'>GITHUB</a>
+      <div className='about-github-buttons'>
+        <a className='about-button'>ABOUT</a>
+        <a href='https://github.com/CloudClub-uoft/GuessTheLocation' target = '_blank' className='github-button'>GITHUB</a>
+      </div>
       <img className='logo' src={Logo} alt='CloudClub logo'></img>
       <a href='/login' className='signin-button'>SIGN-IN</a>
     </div>

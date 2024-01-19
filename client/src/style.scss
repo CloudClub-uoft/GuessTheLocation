@@ -6,10 +6,9 @@ $lightGreen: #b9e7e7;
     //local("Jura"),
     url(./fonts/Jura-Regular.ttf) format("truetype");
 }
-@font-face{
+@font-face {
   font-family: "Bungee";
-  src:
-    url(./fonts/Bungee-Regular.ttf) format("truetype");
+  src: url(./fonts/Bungee-Regular.ttf) format("truetype");
 }
 
 .app {
@@ -81,30 +80,57 @@ $lightGreen: #b9e7e7;
   // NAVBAR
 
   .navbar {
-    display:flex;
-    width:90vw;
-    border:10px solid black;
-    height:4vw;
-    justify-content: center;
-    flex-direction: row;
+    display: flex;
+    top:0;
+    width: 96vw;
+    height: 4vw;
+    justify-content:space-between;
     align-items: center;
-    
-    .logo{
-      
 
+    .logo {
+      flex: 0 1 auto;
+      position:absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      height:3.5vw;
+      width:4vw
     }
-    .about-button{
-      
-    }
 
-    .github-button{
-
+    .about-button,.github-button,.signin-button {
+      //position: absolute;
+      width: 6vw;
+      height: 2vw;
+      border-radius: 0.5vw;
+      border: 0.15vw solid black;
+      font-size:1.2vw;
+      font-family: "Bungee";
+      text-decoration: none;
+      text-align: center;
+      line-height: 1;
+      display:flex;
+      align-items: center;
+      justify-content:center;
+      background: #EBEBEB;
+      color: #000000;
     }
     .signin-button{
-      
+      position: absolute;
+      right: 1.5%;
     }
-    
-    /*
+    .about-button{
+      position:absolute;
+      left:1.5%;
+    }
+    .github-button {
+      position:absolute;
+      left:8%;
+    }
+
+    .about-button:active,.github-button:active,.signin-button:active{
+      transform:scale(96%);
+    }
+  }
+  .old-navbar{    
     .container {
       padding: 10px 0px;
       display: flex;
@@ -148,7 +174,7 @@ $lightGreen: #b9e7e7;
         }
       }
     }
-    */
+    
   }
 
   // FOOTER
@@ -170,178 +196,172 @@ $lightGreen: #b9e7e7;
   }
 
   //POSTCARD COMPONENT
-  .home-posts {
-    //transform: scale(100%);
-    height: 654px;
-    width: 759px;
-    .home-posts-group {
-      height: 654px;
+  
+  .home-post{
+    position:relative;
+    height: 327px;
+    width: 379px;
+    .rectangle {
+      background-color: #eaeaea;
+      border-radius: 10px;
+      box-shadow: 0px 5px 5px #00000040;
+      height: 327px;
       left: 0;
-      position: sticky;
+      position: relative;
       top: 0;
-      width: 759px;
-      .overlap-group {
-        height: 654px;
-        position: relative;
-        width: 763px;
-        .rectangle {
-          background-color: #eaeaea;
-          border-radius: 20px;
-          box-shadow: 0px 10px 10px #00000040;
-          height: 654px;
-          left: 0;
-          position: relative;
-          top: 0;
-          width: 758px;
-          .text-wrapper {
-            color: #000000;
-            font-family: "Jura";
-            font-size: 45px;
-            font-weight: 700;
-            left: 30px;
-            letter-spacing: 0;
-            line-height: normal;
-            position: absolute;
-            top: 577px;
-          }
-          .text-wrapper-2 {
-            color: #000000;
-            font-family: "Jura";
-            font-size: 45px;
-            font-weight: 700;
-            right: 30px;
-            letter-spacing: 0;
-            line-height: normal;
-            position: absolute;
-            top: 577px;
-          }
-        }
-        .image {
-          height: 545px;
-          left: 0;
-          object-fit: cover;
-          position: absolute;
-          top: 0;
-          width: 758px;
-          border-radius: 20px;
-        }
+      width: 379px;
+      .text-wrapper,.text-wrapper-2 {
+        color: #000000;
+        font-family: "Jura";
+        font-size: 22.5px;
+        font-weight: 700;
+        letter-spacing: 0;
+        line-height: normal;
+        position: absolute;
+        top: 288.5px;
+      }
+      .text-wrapper{
+        left: 15px;
+      }
+      .text-wrapper-2 {
+        right: 15px;
       }
     }
+    .image {
+      height: 272px;
+      left: 0;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      width: 379px;
+      border-radius: 10px 10px 0 0px;
+    }
   }
-  //HOME LOGIN CARD COMPONENT
-  .login {
+  
+  .home-post:active{
+    transform: scale(96%);
+  }
+
+  //HOME signup CARD COMPONENT
+  .signup {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    row-gap: 40px;
+    justify-content: space;
+    row-gap: 20px;
     align-items: center;
-    .login-card-box {
+    .signup-card-box {
       position: relative;
       background-color: #ffffff;
-      border-radius: 40px;
-      box-shadow: 0px 4px 4px #00000040;
-      height: 518px;
-      width: 953px;
+      border-radius: 20px;
+      box-shadow: 0px 2px 2px #00000040;
+      height: 259px;
+      width: 477px;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      row-gap: 20px;
-      //transform: scale(50%);
+      row-gap: 10px;
 
-      .email-label {
-        position:relative;
+      .email-label,.username-label,.pass-label{
+        position: relative;
         color: #000000;
-        left: 48px;
+        left: 24px;
         font-family: "Jura";
-        font-size: 35px;
+        font-size: 17.5px;
         font-weight: 700;
         letter-spacing: 0;
         line-height: normal;
+        top:7px;
       }
-      .email-input {
+      .email-input,.username-input,.password-input{
         background-color: #eaeaea;
-        top: 100px;
-        height: 70px;
-        left: 43px;
-        width: 862px;
-        border-radius: 10px;
+        height: 35px;
+        left: 21.5px;
+        width: 431px;
+        border-radius: 5px;
         border: 0px;
         font-family: "Jura";
-        font-size: 35px;
+        font-size: 17.5px;
         font-weight: 700;
         align-self: center;
       }
-      .username-label {
-        position: relative;
-        color: #000000;
-        left: 48px;
-        font-family: "Jura";
-        font-size: 35px;
-        font-weight: 700;
-        letter-spacing: 0;
-        line-height: normal;
-        font-size: 35px;
-        font-weight: 700;
+
+      .password-input{
+        font-size: 25px;
       }
-      .username-input {
-        background-color: #eaeaea;
-        top: 240px;
-        left: 43px;
-        height: 70px;
-        width: 862px;
-        border-radius: 10px;
-        border: 0px;
-        outline: none;
-        font-family: "Jura";
-        font-size: 35px;
-        font-weight: 700;
-        align-self: center;
-      }
-      .pass-label {
-        position: relative;
-        color: #000000;
-        left: 48px;
-        font-family: "Jura";
-        font-size: 35px;
-        font-weight: 700;
-        letter-spacing: 0;
-        line-height: normal;
-        align-self:flex-start;
-      }
-      .password-input {
-        background-color: #eaeaea;
-        height: 70px;
-        width: 862px;
-        outline: none;
-        border-radius: 10px;
-        border:0px;
-        font-family: "Jura";
-        font-size: 50px;
-        align-self:center;
-      }
+      
     }
     .signup-button {
-      height: 80px;
-      width: 290px;
+      height: 40px;
+      width: 145px;
       background-color: #ffffff;
-      border-radius: 20px;
+      border-radius: 10px;
       border: 0px;
-      box-shadow: 0px 4px 4px #00000040;
+      box-shadow: 0px 2px 2px #00000040;
       font-family: "Bungee";
-      font-size: 35px;
+      font-size: 17.5px;
       font-weight: 700;
       padding: 0px;
-      line-height: 0px
+      line-height: 0px;
     }
-    .signup-button:active{
-      transform: scale(0.96);
+    .signup-button:active {
+      transform: scale(96%);
     }
   }
 
   // HOME PAGE
+  .new-home-page{
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height:100%;
+    width:100%;
+    margin-top: 10px;
+    
+    .title-bar{
+      width:100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      position:relative;
+      background: url(img/homebackground.jpg);
+      height:431px;
+      border-radius: 10px;
+            
+      .text-wrapper{
+  
+        p{
+          font-family: "Jura";
+          font-weight: 700;
+          font-size: 25px;
+        }
+        h1{
+          justify-self: center;
+          font-family: "Bungee";
+          align-self: center;
+          font-size:50px;
+          font-weight: 700;
+        }
+      }
+    }
+    h2{
+      font-family: "Bungee";
+      align-self: center;
+      text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.25);
+    }
+    .postcard-container{
+      overflow:auto;
+      width:100%;
+      display:flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
   .home {
     .posts {
-      margin-top: 50px;
+      margin-top: 50px; 
       display: flex;
       flex-direction: column;
       gap: 150px;
@@ -415,7 +435,7 @@ $lightGreen: #b9e7e7;
   .single {
     display: flex;
     gap: 50px;
-
+    top:1%;
     .content {
       flex: 5;
       display: flex;

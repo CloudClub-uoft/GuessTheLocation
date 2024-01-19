@@ -4,7 +4,7 @@ import { GoogleMap, useJsApiLoader, Marker} from "@react-google-maps/api";
 import style from '../style.scss';
 import axios from 'axios';
 import HomePostCard from '../components/HomePostCard';
-import HomeLoginCard from '../components/HomeLoginCard';
+import HomeSignupCard from '../components/HomeSignupCard';
 
 
 
@@ -17,10 +17,9 @@ const nothing = () =>
 
 const HomePostCardTest = () =>{
   let at = '@';
-  let user = 'insert_user';
+  let user = 'migs_111';
   let userString = at.concat(user);
-
-  let postDate = "10/12/2100";
+  let postDate = "10/12/2111";
   
   return (
     <div className='home'>
@@ -32,16 +31,66 @@ const HomePostCardTest = () =>{
   )
 }
 
-const HomeLoginCardTest = () =>{
+const HomeSignupCardTest = () =>{
   return(
     <div className='test'>
-      <HomeLoginCard/>
+      <HomeSignupCard/>
     </div>
   )
 }
 
+const NewHome = () =>{
+  
+  let user1 = 'tester_111';
+  let user2 = 'tester_123';
+  let user3 = 'tester_567';
 
-const Home = () => {
+  let userString1 = '@'.concat(user1);
+  let userString2 = '@'.concat(user2);
+  let userString3 = '@'.concat(user3);
+
+  let postDate = "10/12/2111";
+
+
+  return(
+    <div className='new-home-page'>
+      <div className='title-bar'>
+        <div className='text-wrapper'>
+          <p className='title-prefix'>CloudClub's</p>
+          <h1 className='title'>GUESS THE LOCATION</h1>
+          <p className='game-description'>The ultimate location guessing game!</p>
+        </div>
+        <HomeSignupCard/>
+      </div>
+      <div className='text-container'>
+        <h2>RECENT POSTS</h2>
+      </div>
+      <div className='postcard-container'>
+        <HomePostCard
+          username = {userString1}
+          date = {postDate}
+          className='postcard-1'
+          key='postcard-1'
+        />
+        <HomePostCard
+          username = {userString2}
+          date = {postDate}
+          className='postcard-2'
+          key='postcard-2'
+        />
+        <HomePostCard
+          username = {userString3}
+          date = {postDate}
+          className='postcard-3'
+          key='postcard-3'
+        />
+      </div>
+    </div>
+  )
+
+}
+
+const OldHome = () => {
 
   const {isLoaded} = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
@@ -180,5 +229,5 @@ const Home = () => {
   }        
 }
 
-export default nothing;
+export default NewHome;
 

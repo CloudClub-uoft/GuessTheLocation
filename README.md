@@ -5,7 +5,7 @@
 1. Clone this repository
 2. `cd GuessTheLocation`
 3. `cd server && npm i` to install dependencies for the server directory
-   1. Note: npx db-migrate up --config database/database.json to set up database
+   1. Note: npx db-migrate up --config database/database.json to set up database ---- ps is this still the necessary step as it gives me error msg and I finished setup without using it
 4. `npm run dev`. You should get message `Server listening on 3001`
 5. Open a new terminal and run `cd GuessTheLocation/client`
 6. Run `npm i` to install dependencies for the client directory

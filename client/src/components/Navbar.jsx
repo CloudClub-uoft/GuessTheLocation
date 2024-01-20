@@ -1,10 +1,10 @@
 import React from 'react'
-import Logo from "../img/temp1.jpg"
+import Logo from "../img/logo.png"
 import {Link} from 'react-router-dom'
 
-const Navbar = () => {
+const OldNavbar = () =>{
   return (
-    <div className="navbar ">
+    <div className="old-navbar">
       <div className='container'>
         <div className='logo'>
           <img src={Logo} alt="logo" />
@@ -24,7 +24,24 @@ const Navbar = () => {
         </div>
       </div>
     </div>
+    
   )
 }
+
+const Navbar = () => {
+  
+  return (
+    <div className="navbar">
+      <div className='about-github-buttons'>
+        <a className='about-button'>ABOUT</a>
+        <a href='https://github.com/CloudClub-uoft/GuessTheLocation' target = '_blank' className='github-button'>GITHUB</a>
+      </div>
+      <img className='logo' src={Logo} alt='CloudClub logo'></img>
+      <a href='/login' className='signin-button'>SIGN-IN</a>
+    </div>
+  )
+}
+
+
 
 export default Navbar;

@@ -1,9 +1,14 @@
 const express = require('express');
-require("dotenv").config();
 const app = express();
-//const cors = require('cors')
+const fileUpload = require("express-fileupload")
+app.use(fileUpload())
 
-//app.use(cors());
+// Config
+require("dotenv").config({ path: '../.env' });
+
+// const s3client = require("./config/s3")
+const s3Client = require("./config/s3setup")
+
 app.use(express.json()); // Parse JSON request bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
 
@@ -13,13 +18,16 @@ app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
 const authRouter = require('./routes/auth');
-const guessRouter = require('./routes/guesses');
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
-app.use("/auth", authRouter);
-app.use("/make_guess", guessRouter);
+app.use("/uath", authRouter);
 
-const PORT = process.env.PORT;
+app.set("view engine", "ejs")
+// Pass s3client to POST-upload.js
+require('./routes/POST-upload.js')(app, s3Client);
+require('./routes/GET-upload.js')(app);
+
+const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

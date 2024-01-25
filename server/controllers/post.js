@@ -5,20 +5,18 @@ const multer  = require('multer');
 const getPosts = (req, res) => {
     db.query(`SELECT * FROM post;`, function (error, results, fields) {
         if (error) {
-            res.status(400);
-            res.send("failure");
+            return res.status(500).json({ error: "Internal Server Error." });
         }
-        res.send(JSON.stringify(results));
+        return res.status(200).json(results);
     });
 }
 
 const getPostsByUser = (req, res) => {
     db.query(`SELECT * FROM post WHERE userID = ${req.params.userId};`, function (error, results, fields) {
         if (error) {
-            res.status(400);
-            res.send("failure");
+            return res.status(500).json({ error: "Internal Server Error." });
         }
-        res.send(JSON.stringify(results));
+        return res.status(200).json(results);
     });
 }
 
@@ -26,51 +24,59 @@ const getPostsByUser = (req, res) => {
 const getPostWithId = (req, res) => {
     db.query(`SELECT * FROM post WHERE postID = ${req.params.postId};`, function (error, results, fields) {
         if (error) {
-            res.status(400);
-            res.send("failure");
+            return res.status(500).json({ error: "Internal Server Error." });
         }
-        res.send(JSON.stringify(results[0]));
+        return res.status(200).json(results);
     });
 }
 
 const deletePostWithId = (req, res) => {
     db.query(`DELETE FROM post WHERE postID = ${req.params.postId};`, function (error, results, fields) {
         if (error) {
-            res.status(400);
-            res.send("failure");
+            return res.status(500).json({ error: "Internal Server Error." });
         }
-        res.send("success");
+        return res.status(200).json({ message: "success" });
     });
 }
 
-// https://www.npmjs.com/package/multer
-const upload = multer({ dest: 'uploads/' });
-
-// const addPostMulterFields = upload.fields({username: "username", locationLat: "locationLat", locationLong: "locationLong", file: "file"});
-const addPostMulterFields = upload.single("file");  // only a single file is uploaded
-
 const addPost = (req, res) => {  // this only accepts multipart/form-data type as post
-    const username = req.body.username;
+    const userID = req.session.user;
+    if (userID === null) {
+        return res.status(403).json({ error: "Only authenticated users can create posts" });
+    }
+
+    db.query(`SELECT postID FROM post ORDER BY postID DESC LIMIT 0, 1;`, function (error, results, fields) {
+        if (error) {
+            return res.status(500).json({ error: "Internal Server Error." });
+        }
+        const maxPostID = results[0].postID + 1;
+    });
+
     const locationLat = req.body.locationLat;
     const locationLong = req.body.locationLong;
     const file = req.file;  // documentation on this seems to be a little hazy
-    
-    file.path;  // this is where the uploaded image is. it should go somewhere in the database but there's no entry for it
-    
-    db.query(`SELECT userId FROM user_profile WHERE "username"=${username};`, function (error, results, fields) {
-        if (error) {
-            res.status(400);
-            res.send("failure");
+
+    // this doesn't work concurrently
+    const s3key = "imageForId"+maxPostID;  // replace with a hash of username+time uploaded+file uploaded
+
+    // Brady's S3 Code
+    var params = {
+        Bucket: process.env.BUCKET_NAME,
+        Key: s3key,
+        Body: file.data
+    }
+    s3Client.upload(params, function (err,data) {
+        if (err) {
+            return res.status(500).json({ error: "Internal Server Error." });
         }
-        const userID = results[0].userID;
-        // postID and time should be automatic I think?
-        db.query(`INSERT INTO post("userID","locationLat","locationLong") VALUES('${userID}','${locationLat}','${locationLong}');`, function (error, results, fields) {
-            if (error) {
-                res.status(400);
-                res.send("failure");
-            }
-            res.send("success");
-        });
+    }
+    
+    db.query(`INSERT INTO post("userID","locationLat","locationLong") VALUES('${userID}','${locationLat}','${locationLong}');`, function (error, results, fields) {
+        if (error) {
+            return res.status(500).json({ error: "Internal Server Error." });
+        }
+        // should probably redirect to the post instead
+        return res.status(200).json({ message: "success" });
     });
     
 }

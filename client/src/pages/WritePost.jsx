@@ -1,11 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const WritePost = () => {
+  const [imagePreview, setImagePreview] = useState(null);
+
+  function handlePreviewImg(e) {
+    console.log(e.target.files);
+    setImagePreview(URL.createObjectURL(e.target.files[0]));
+  }
+
   return (
     <div className='add'>
       <div className='content'>
         <input type="text" placeholder="Title"/>
         <div>IMAGE PREVIEW</div>
+        <img
+          width={350}
+          src = {imagePreview}
+        />
       </div>
       <div className='menu'>
         <div className='item'>
@@ -16,13 +27,23 @@ const WritePost = () => {
           <span>
             <b> Visibility: </b> Public
           </span>
+
+          {/** 
           <input style={{display:"none"}} type="file" id="file"/>
           <label htmlFor="file">Upload Image</label>
+          */}
+        
+        <form action="/postupload" method="POST" encType="multipart/form-data">
+        <input type="file" name="image" accept="image/*" onChange={handlePreviewImg}/>
+        <div class="col-md-12 text-right">
+          <button>Upload Image</button>
+        </div>
+        </form>
+
           <div className="buttons">
             <button>Save as draft</button>
 
-            {/**onclick */}
-            <button>Upload Image</button> 
+            {/* <button>Upload Image</button> */}
           </div>
         </div>
         <div className='item'>

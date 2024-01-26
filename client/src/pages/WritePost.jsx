@@ -1,25 +1,57 @@
-import React, { useState } from 'react'
+import axios from "axios";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const WritePost = () => {
   const [imagePreview, setImagePreview] = useState(null);
+  const [fileToUpload, setFileToUpload] = useState(null);
+  const [uploadMessage, setUploadMessage] = useState();
 
+  // Preview Image
   function handlePreviewImg(e) {
-    console.log(e.target.files);
-    setImagePreview(URL.createObjectURL(e.target.files[0]));
+    setUploadMessage()
+    let file = e.target.files[0];
+    if (file != undefined) {
+      setImagePreview(URL.createObjectURL(file));
+    }
+    setFileToUpload(file);
+  }
+
+  function handleImgUpload() {
+    if (fileToUpload != undefined) {
+      const formData = new FormData();
+      formData.append("file", fileToUpload);
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      };
+      console.log(fileToUpload);
+      axios
+        .post("/postupload", formData, config)
+        .then((res) => {
+          console.log(res);
+          setUploadMessage('Successfully uploaded "' + fileToUpload.name + '"!');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    // var formData = new FormData();
+    // var imagefile = document.querySelector('#file');
   }
 
   return (
-    <div className='add'>
-      <div className='content'>
-        <input type="text" placeholder="Title"/>
+    <div className="add">
+      <div className="content">
+        <input type="text" placeholder="Title" />
         <div>IMAGE PREVIEW</div>
-        <img
-          width={350}
-          src = {imagePreview}
-        />
+        <img width={350} src={imagePreview} />
+        <h3>{uploadMessage}</h3>
       </div>
-      <div className='menu'>
-        <div className='item'>
+      <div className="menu">
+        <div className="item">
           <h1>Publish</h1>
           <span>
             <b> Status: </b> Draft
@@ -32,13 +64,18 @@ const WritePost = () => {
           <input style={{display:"none"}} type="file" id="file"/>
           <label htmlFor="file">Upload Image</label>
           */}
-        
-        <form action="/postupload" method="POST" encType="multipart/form-data">
-        <input type="file" name="image" accept="image/*" onChange={handlePreviewImg}/>
-        <div class="col-md-12 text-right">
-          <button>Upload Image</button>
-        </div>
-        </form>
+
+          {/* <form action="/postupload" method="POST" encType="multipart/form-data"> */}
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handlePreviewImg}
+          />
+          <div class="col-md-12 text-right">
+            <button onClick={handleImgUpload}>Upload Image</button>
+          </div>
+          {/* </form> */}
 
           <div className="buttons">
             <button>Save as draft</button>
@@ -46,7 +83,7 @@ const WritePost = () => {
             {/* <button>Upload Image</button> */}
           </div>
         </div>
-        <div className='item'>
+        <div className="item">
           <h1>Category</h1>
           <input type="radio" name="temp" value="temp1" id="temp1" />
           <label htmlFor="temp1">temp1</label>
@@ -58,9 +95,8 @@ const WritePost = () => {
           <label htmlFor="temp4">temp4</label>
         </div>
       </div>
-      
     </div>
-  )
-}
+  );
+};
 
 export default WritePost;

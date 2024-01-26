@@ -23,9 +23,10 @@ module.exports = (app, s3Client) => {
                     .json({ error: "Internal Server Error 500" })
                 */
             }
-            else
+            else{
                 console.log("\nUploaded Object:\n", data);
-            res.render("uploaddone");
+                res.render("uploaddone");
+            }     
         })
     })
 }

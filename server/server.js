@@ -1,4 +1,5 @@
 const express = require("express");
+const session = require('express-session'); 
 const app = express();
 
 require("dotenv").config();
@@ -9,8 +10,15 @@ const s3Client = require("./config/s3setup");
 // Pass s3client to POST-upload route
 require("./routes/POST-upload.js")(app, s3Client);
 
-app.use(express.json()); // Parse JSON request bodies
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
+// app.use(cors());
+app.use(express.json()); // Parse JSON request bodies with an increased limit
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data with an increased limit
+
+app.use(session({
+  secret: 'redissecretcloud',//newly-added, copied from .env, highl unsure
+  resave: false,
+  saveUninitialized: true
+}));
 
 // TODO: Configure database connections, authentication, and other application-level settings
 

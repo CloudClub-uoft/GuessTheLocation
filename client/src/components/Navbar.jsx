@@ -10,6 +10,12 @@ const OldNavbar = () =>{
           <img src={Logo} alt="logo" />
         </div>
         <div className='links'>
+          <Link className='link' to="/register">
+            <h6>Register</h6>
+          </Link>
+          <Link className='link' to="/login">
+            <h6>Login</h6>
+          </Link>
           <Link className='link' to="/?cat=art">
             <h6>My Guesses</h6>
           </Link>

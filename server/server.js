@@ -1,11 +1,18 @@
 const express = require('express');
+const session = require('express-session'); 
 require("dotenv").config();
 const app = express();
-//const cors = require('cors')
+// const cors = require('cors')
 
-//app.use(cors());
-app.use(express.json()); // Parse JSON request bodies
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
+// app.use(cors());
+app.use(express.json()); // Parse JSON request bodies with an increased limit
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data with an increased limit
+
+app.use(session({
+  secret: 'redissecretcloud',//newly-added, copied from .env, highl unsure
+  resave: false,
+  saveUninitialized: true
+}));
 
 // TODO: Configure database connections, authentication, and other application-level settings
 

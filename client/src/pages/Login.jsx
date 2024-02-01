@@ -3,7 +3,7 @@ import axios from 'axios';
 import HomeLoginCard from '../components/HomeLoginCard';
 
 
-const OldLogin = () => {
+const Login = () => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -57,6 +57,6 @@ const OldLogin = () => {
   )
 }
 
-const Login = HomeLoginCard
+// const Login = HomeLoginCard
 
 export default Login

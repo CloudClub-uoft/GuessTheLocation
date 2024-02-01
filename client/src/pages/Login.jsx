@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import HomeLoginCard from '../components/HomeLoginCard';
 
 
-const Login = () => {
+const OldLogin = () => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -55,5 +56,7 @@ const Login = () => {
 
   )
 }
+
+const Login = HomeLoginCard
 
 export default Login

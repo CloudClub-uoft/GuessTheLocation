@@ -33,10 +33,9 @@ const register = (req, res) => {
         }
 
         // sequential
-        // userID and time are automatic I think. Re: No, they aren't. Error: Field 'userID' doesn't have a default value
         db.query(`INSERT INTO GuessTheLocation.user_profile (username,firstname,lastname,password,email,emailVerified) VALUES ('${username}','${firstname}','${lastname}','${password}','${email}',false);`, function (error, results, fields) {
             if (error) {
-                console.log(error);  // should I log all command failures? they shouldn't happen
+                console.log(error);
                 res.status(400);
                 res.end("failure");
                 return;

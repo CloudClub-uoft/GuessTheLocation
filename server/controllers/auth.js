@@ -7,22 +7,12 @@ const register = (req, res) => {
     const firstname = req.body.firstname;
     const lastname = req.body.lastname;
     const password = req.body.password;
-    console.log('c1');
-    console.log("On registration page received:");
-    console.log(username);
-    console.log(firstname);
-    console.log(lastname);
-    console.log(email);
-    console.log(password);
-    // const time = Date.now() / 1000;  // unix seconds
-    // this may be unnecessary
     
     // https://github.com/mysqljs/mysql#introduction
     db.query(`SELECT * FROM GuessTheLocation.user_profile WHERE username='${username}' OR email='${email}';`, function (error, results, fields) {
         if (error) {
             res.status(400);
             res.end("failure");
-            console.log('c2-1');
             return;
         }
         if(results.length != 0) {  // due to javascript 0 shenanigans, 1 !== 0 behaves weirdly? using != instead

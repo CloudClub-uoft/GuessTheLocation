@@ -9,31 +9,39 @@ const WritePost = () => {
 
   // Preview Image
   function handlePreviewImg(e) {
-    setUploadMessage()
+    setUploadMessage(); // Clear upload message
     let file = e.target.files[0];
     if (file != undefined) {
+      // If file is not empty
       setImagePreview(URL.createObjectURL(file));
+    } else {
+      setImagePreview("");
     }
-    setFileToUpload(file);
+    setFileToUpload(file); // Store the chosen file in variable "fileToUpload"
   }
 
   function handleImgUpload() {
     if (fileToUpload != undefined) {
-      const formData = new FormData();
+      // If file is not empty
+      const formData = new FormData(); // New formData object to be used in axios
       formData.append("file", fileToUpload);
       const config = {
         headers: {
           "content-type": "multipart/form-data",
         },
       };
-      console.log(fileToUpload);
+      // console.log(fileToUpload); // For testing
       axios
-        .post("/postupload", formData, config)
+        .post("/postupload", formData, config) // Call to backend API to upload the chosen file
         .then((res) => {
+          // Success
           console.log(res);
-          setUploadMessage('Successfully uploaded "' + fileToUpload.name + '"!');
+          setUploadMessage(
+            'Successfully uploaded "' + fileToUpload.name + '"!'
+          );
         })
         .catch((err) => {
+          // Error
           console.log(err);
         });
     }
@@ -47,6 +55,7 @@ const WritePost = () => {
       <div className="content">
         <input type="text" placeholder="Title" />
         <div>IMAGE PREVIEW</div>
+        {/* Image to Preview */}
         <img width={350} src={imagePreview} />
         <h3>{uploadMessage}</h3>
       </div>
@@ -60,12 +69,6 @@ const WritePost = () => {
             <b> Visibility: </b> Public
           </span>
 
-          {/** 
-          <input style={{display:"none"}} type="file" id="file"/>
-          <label htmlFor="file">Upload Image</label>
-          */}
-
-          {/* <form action="/postupload" method="POST" encType="multipart/form-data"> */}
           <input
             type="file"
             name="image"
@@ -73,6 +76,7 @@ const WritePost = () => {
             onChange={handlePreviewImg}
           />
           <div class="col-md-12 text-right">
+            {/* Upload button */}
             <button onClick={handleImgUpload}>Upload Image</button>
           </div>
           {/* </form> */}
@@ -80,7 +84,6 @@ const WritePost = () => {
           <div className="buttons">
             <button>Save as draft</button>
 
-            {/* <button>Upload Image</button> */}
           </div>
         </div>
         <div className="item">

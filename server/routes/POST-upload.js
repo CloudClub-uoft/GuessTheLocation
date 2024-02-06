@@ -14,21 +14,14 @@ module.exports = (app, s3Client) => {
 
     var params = {
       Bucket: process.env.BUCKET_NAME,
-      // Key: "test" + "." + fileExtension,
       Key: file.name,
       Body: file.data,
     };
     s3Client.upload(params, function (err, data) {
       if (err) {
         console.log(err);
-        /*
-                return res
-                    .status(500)
-                    .json({ error: "Internal Server Error 500" })
-                */
       } else {
         console.log("\nUploaded Object:\n", data);
-        res.render("uploaddone"); // EJS
       }
     });
   });

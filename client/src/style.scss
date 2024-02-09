@@ -237,16 +237,16 @@ $lightGreen: #b9e7e7;
   .home-posts-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around; // This spreads out the postcards evenly
-    gap: 20px; // This adds space between the postcards
+    justify-content: space-around; // Spreads out the postcards evenly
+    gap: 20px; // Adds space between the postcards
     margin: 0 auto; // Centers the container if there's extra space on the sides
-    max-width: 1200px; // Maximum width of the container, you can adjust this value
+    max-width: 1200px; // Maximum width of the container, can be adjusted
   }
   
   .home-post {
     flex: 0 1 calc(33.333% - 20px); // Adjust the percentage and subtraction value as needed
     box-sizing: border-box; // Ensures padding and borders are included in the width
-    height: auto; // Height changes to auto for a flexible layout
+    height: auto; 
     position: relative;
     margin-bottom: 20px; // Adds space between rows of postcards
   
@@ -387,13 +387,20 @@ $lightGreen: #b9e7e7;
       flex-direction: row;
       justify-content: space-around;
       align-items: center;
+      background-repeat: no-repeat; // Ensures the background doesn't repeat
       //position:relative;
       background: url(img/homebackground.jpg);
       background-size:contain;
       height:431px;
       border-radius: 10px;
       //border:3px solid blue;
-            
+      @media (max-width: 768px) {
+        flex-direction: column; // Stacks the elements vertically on smaller screens
+        justify-content: center; // Centers the items vertically
+        align-items: flex-start; // Aligns items to the start of the flex container
+        height: auto; // Height becomes automatic to contain all the items
+        padding: 20px; // Add some padding to not touch the edges
+      }
       .text-wrapper{
         
         p{

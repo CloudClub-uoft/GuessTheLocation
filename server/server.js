@@ -6,8 +6,9 @@ const fileUpload = require("express-fileupload");
 app.use(fileUpload());
 
 const s3Client = require("./config/s3setup");
-// Pass s3client to POST-upload route
+// Pass s3client to s3 routes
 require("./routes/POST-upload.js")(app, s3Client);
+require("./routes/GET-image.js")(app, s3Client);
 
 //app.use(cors());
 app.use(express.json()); // Parse JSON request bodies

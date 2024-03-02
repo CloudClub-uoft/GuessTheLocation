@@ -1,6 +1,6 @@
 const express = require("express");
 const session = require('express-session'); 
-const app = express();
+// const app = express();
 
 require("dotenv").config();
 const fileUpload = require("express-fileupload");

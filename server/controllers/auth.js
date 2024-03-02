@@ -38,6 +38,9 @@ const register = (req, res) => {
     });
 }
 
+
+console.log("hello world");
+
 const login = (req, res) => {
     const username = req.body.username;
     const password = req.body.password;

@@ -35,8 +35,10 @@ const CommunityPosts = () =>{
 
     return (
         <div className='community-posts'>
-            <h2 className='page-title'> COMMUNITY </h2>
-            <p>Recent posts taken by real people!</p>
+            <div className='text-wrapper'>
+                <h2 className='page-title'> COMMUNITY </h2>
+                <p>Recent posts taken by real people!</p>
+            </div>
             <div className='posts-wrapper'>
                 {dummy_posts.map(post => (
                     <HomePostCard

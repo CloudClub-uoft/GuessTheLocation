@@ -339,7 +339,6 @@ $lightGreen: #b9e7e7;
     height: 100%;
     width: 96vw;
     margin-top: 5px;
-    //border:5px solid black;
     background-size: cover;
 
     .title-bar {
@@ -348,16 +347,13 @@ $lightGreen: #b9e7e7;
       flex-direction: row;
       justify-content: space-around;
       align-items: center;
-      //position:relative;
       background: url(img/homebackground.jpg);
       background-size: contain;
       height: 431px;
       border-radius: 10px;
-      //border:3px solid blue;
-
-      .text-wrapper {
-
-        p {
+            
+      .text-wrapper{
+        p{
           font-family: "Jura";
           font-weight: 700;
           font-size: 25px;
@@ -387,18 +383,29 @@ $lightGreen: #b9e7e7;
       column-gap: 40px;
       //border: 2px solid green;
 
-      .postcard-1,
-      .postcard-2,
-      .postcard-3 {}
+      .postcard-1,.postcard-2,.postcard-3{
+      }
     }
 
   }
   .community-posts{
-    .page-title{
-
-    }
-    p{
-
+    display:flex;
+    flex-direction: column;
+    gap:30px;
+    .text-wrapper{
+      text-align: center;
+      line-height: 10px;
+      .page-title{
+        font-family: "Bungee";
+        font-size: 40px;
+        text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.25);
+      }
+      p{
+        align-self: center;
+        font-family: "Jura";
+        font-weight: 700;
+        font-size: 20px;
+      }
     }
     .posts-wrapper{
       display:flex;

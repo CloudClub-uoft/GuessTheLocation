@@ -1,23 +1,62 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react';
+import axios from 'axios';
+import HomeLoginCard from '../components/HomeLoginCard';
 
 
 const Login = () => {
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = async (e) => {
+    console.log("handle submit");
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('/auth/login', {
+        username,
+        password
+      });
+
+      
+      console.log('Login successful!', response.data);
+      // Handle successful login, e.g., set authentication tokens, redirect, etc.
+    } catch (error) {
+      console.error('Login failed!', error);
+      // Handle login failure, show error message, etc.
+    }
+  };
+  
   return (
     <div className='auth'>
         <h1>Login</h1>
-        <form>
-            <input required type="text" placeholder="username"/>
-            <input required type="password" placeholder="password"/>
-            <button type="submit">Login</button>
-            <p>This is an error!</p>
-            <span>
-                No account? 
-                <Link to="/register">Register</Link>
-            </span>
+        <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <button type="submit">Submit</button>
         </form>
     </div>
+
+
   )
 }
+
+// const Login = HomeLoginCard
 
 export default Login

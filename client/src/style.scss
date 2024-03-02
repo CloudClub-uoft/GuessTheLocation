@@ -393,6 +393,22 @@ $lightGreen: #b9e7e7;
     }
 
   }
+  .community-posts{
+    .page-title{
+
+    }
+    p{
+
+    }
+    .posts-wrapper{
+      display:flex;
+      flex-direction:row;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 30px;
+
+    }
+  }
 
   .home {
     .posts {

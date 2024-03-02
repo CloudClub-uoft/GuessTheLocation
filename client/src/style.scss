@@ -6,6 +6,7 @@ $lightGreen: #b9e7e7;
     //local("Jura"),
     url(./fonts/Jura-Regular.ttf) format("truetype");
 }
+
 @font-face {
   font-family: "Bungee";
   src: url(./fonts/Bungee-Regular.ttf) format("truetype");
@@ -14,8 +15,10 @@ $lightGreen: #b9e7e7;
 .app {
   display: flex;
   justify-content: center;
+
   .container {
     width: 1024px;
+
     .link {
       text-decoration: none;
       color: inherit;
@@ -26,6 +29,7 @@ $lightGreen: #b9e7e7;
     text-decoration: none;
     color: inherit;
   }
+
   // LOGIN & REGISTER
 
   .auth {
@@ -82,58 +86,65 @@ $lightGreen: #b9e7e7;
   .navbar {
     display: flex;
     flex-direction: row;
-    top:0;
+    top: 0;
     height: 51.2px;
     align-items: center;
     justify-content: space-between;
-    
+
 
     .logo {
       flex: 0 1 auto;
-      position:absolute;
+      position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      height:44.6px;
-      width:51.2;
+      height: 44.6px;
+      width: 51.2;
     }
 
-    .about-button,.github-button,.signin-button {
+    .about-button,
+    .github-button,
+    .signin-button {
       width: 77px;
       height: 25.6px;
       border-radius: 6.4px;
       border: 1.92px solid black;
-      font-size:15.36px;
+      font-size: 15.36px;
       font-family: "Bungee";
       text-decoration: none;
       text-align: center;
       line-height: 1;
-      display:flex;
+      display: flex;
       align-items: center;
-      justify-content:center;
+      justify-content: center;
       background: #EBEBEB;
       color: #000000;
     }
-    
-    .about-github-buttons{
+
+    .about-github-buttons {
       display: flex;
       column-gap: 15px;
     }
 
-    .about-button:active,.github-button:active,.signin-button:active{
-      transform:scale(96%);
+    .about-button:active,
+    .github-button:active,
+    .signin-button:active {
+      transform: scale(96%);
     }
   }
-  .old-navbar{    
+
+  .old-navbar {
     .container {
       padding: 10px 0px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       .logo {
         img {
           width: 120px;
         }
       }
+
       .links {
         display: flex;
         align-items: center;
@@ -144,9 +155,11 @@ $lightGreen: #b9e7e7;
         font-size: 16px;
         font-weight: 300;
       }
+
       span {
         cursor: pointer;
       }
+
       .post {
         background-color: $lightGreen;
         width: 50px;
@@ -167,7 +180,7 @@ $lightGreen: #b9e7e7;
         }
       }
     }
-    
+
   }
 
   // FOOTER
@@ -178,6 +191,7 @@ $lightGreen: #b9e7e7;
     display: flex;
     align-items: center;
     font-size: 12px;
+
     img {
       height: 50px;
     }
@@ -185,15 +199,18 @@ $lightGreen: #b9e7e7;
 
   .map-container {
     width: 800px;
-    height: 1000px;
+    height: 800px;
+    border-radius: 10px;
+
   }
 
   //POSTCARD COMPONENT
-  
-  .home-post{
-    position:relative;
+
+  .home-post {
+    position: relative;
     height: 327px;
     width: 379px;
+
     .rectangle {
       background-color: #eaeaea;
       border-radius: 10px;
@@ -203,7 +220,9 @@ $lightGreen: #b9e7e7;
       position: relative;
       top: 0;
       width: 379px;
-      .text-wrapper,.text-wrapper-2 {
+
+      .text-wrapper,
+      .text-wrapper-2 {
         color: #000000;
         font-family: "Jura";
         font-size: 22.5px;
@@ -213,13 +232,16 @@ $lightGreen: #b9e7e7;
         position: absolute;
         top: 288.5px;
       }
-      .text-wrapper{
+
+      .text-wrapper {
         left: 15px;
       }
+
       .text-wrapper-2 {
         right: 15px;
       }
     }
+
     .image {
       height: 272px;
       left: 0;
@@ -230,8 +252,8 @@ $lightGreen: #b9e7e7;
       border-radius: 10px 10px 0 0px;
     }
   }
-  
-  .home-post:active{
+
+  .home-post:active {
     transform: scale(96%);
   }
 
@@ -242,6 +264,7 @@ $lightGreen: #b9e7e7;
     justify-content: space;
     row-gap: 20px;
     align-items: center;
+
     .signup-card-box {
       position: relative;
       background-color: #ffffff;
@@ -254,7 +277,9 @@ $lightGreen: #b9e7e7;
       align-items: flex-start;
       row-gap: 10px;
 
-      .email-label,.username-label,.pass-label{
+      .email-label,
+      .username-label,
+      .pass-label {
         position: relative;
         color: #000000;
         left: 24px;
@@ -263,9 +288,12 @@ $lightGreen: #b9e7e7;
         font-weight: 700;
         letter-spacing: 0;
         line-height: normal;
-        top:7px;
+        top: 7px;
       }
-      .email-input,.username-input,.password-input{
+
+      .email-input,
+      .username-input,
+      .password-input {
         background-color: #eaeaea;
         height: 35px;
         left: 21.5px;
@@ -278,11 +306,12 @@ $lightGreen: #b9e7e7;
         align-self: center;
       }
 
-      .password-input{
+      .password-input {
         font-size: 25px;
       }
-      
+
     }
+
     .signup-button {
       height: 40px;
       width: 145px;
@@ -296,72 +325,78 @@ $lightGreen: #b9e7e7;
       padding: 0px;
       line-height: 0px;
     }
+
     .signup-button:active {
       transform: scale(96%);
     }
   }
 
   // HOME PAGE
-  .new-home-page{
+  .new-home-page {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height:100%;
-    width:96vw;
+    height: 100%;
+    width: 96vw;
     margin-top: 5px;
     //border:5px solid black;
     background-size: cover;
-    .title-bar{
-      width:100%;
+
+    .title-bar {
+      width: 100%;
       display: flex;
       flex-direction: row;
       justify-content: space-around;
       align-items: center;
       //position:relative;
       background: url(img/homebackground.jpg);
-      background-size:contain;
-      height:431px;
+      background-size: contain;
+      height: 431px;
       border-radius: 10px;
       //border:3px solid blue;
-            
-      .text-wrapper{
-        
-        p{
+
+      .text-wrapper {
+
+        p {
           font-family: "Jura";
           font-weight: 700;
           font-size: 25px;
         }
-        h1{
+
+        h1 {
           justify-self: center;
           font-family: "Bungee";
           align-self: center;
-          font-size:50px;
+          font-size: 50px;
           font-weight: 700;
         }
       }
     }
-    h2{
+
+    h2 {
       font-family: "Bungee";
       align-self: center;
       text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.25);
     }
-    .postcard-container{
-      width:100%;
-      display:flex;
+
+    .postcard-container {
+      width: 100%;
+      display: flex;
       flex-direction: row;
       justify-content: space-between;
       column-gap: 40px;
       //border: 2px solid green;
 
-      .postcard-1,.postcard-2,.postcard-3{
-      }
+      .postcard-1,
+      .postcard-2,
+      .postcard-3 {}
     }
 
   }
 
   .home {
     .posts {
-      margin-top: 50px; 
+      margin-top: 50px;
       display: flex;
       flex-direction: column;
       gap: 150px;
@@ -396,6 +431,7 @@ $lightGreen: #b9e7e7;
             object-fit: cover;
           }
         }
+
         .content {
           flex: 1;
           display: flex;
@@ -435,7 +471,8 @@ $lightGreen: #b9e7e7;
   .single {
     display: flex;
     gap: 50px;
-    top:1%;
+    top: 1%;
+
     .content {
       flex: 5;
       display: flex;
@@ -453,6 +490,7 @@ $lightGreen: #b9e7e7;
         align-items: center;
         gap: 10px;
         font-size: 14px;
+
         img {
           width: 50px;
           height: 50px;
@@ -486,6 +524,7 @@ $lightGreen: #b9e7e7;
         line-height: 30px;
       }
     }
+
     .menu {
       flex: 2;
       display: flex;
@@ -597,6 +636,7 @@ $lightGreen: #b9e7e7;
             border: 1px solid teal;
             padding: 3px 5px;
           }
+
           :last-child {
             cursor: pointer;
             color: white;
@@ -615,4 +655,61 @@ $lightGreen: #b9e7e7;
       }
     }
   }
+
+  // Guess
+
+  .button-guess-container {
+    margin-top: 30px;
+  }
+
+  .button-guess-page {
+    height: 40px;
+    width: 250px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 0px;
+    box-shadow: 0px 2px 2px #00000040;
+    font-family: "Bungee";
+    font-size: 17.5px;
+    font-weight: 700;
+    color: black;
+    padding: 0px;
+    line-height: 0px;
+    padding: 14px 50px;
+    text-align: center;
+    text-decoration: none;
+
+
+  }
+
+  .button_container {
+    margin-left: 15%;
+    margin-bottom: 20px;
+  }
+
+  .topMap {
+    height: 40px;
+    width: 145px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 5px;
+    border-color: black;
+    box-shadow: 0px 2px 2px #00000040;
+    font-family: "Bungee";
+    font-size: 17.5px;
+    font-weight: 700;
+    padding: 0px;
+    line-height: 0px;
+    margin-left: 30px;
+    align-items: center;
+
+
+    &:hover {
+      background-color: black;
+      color: white;
+    }
+
+  }
+
+
 }

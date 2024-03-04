@@ -2,24 +2,24 @@ import React, { useEffect, useState } from "react";
 import Edit from "../img/temp2.jpg";
 import Delete from "../img/temp3.jpg";
 import Menu from "../components/Menu";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
 const Single = () => {
-  const [imageURL, setImageURL] = useState();
-  const [loaded, setLoaded] = useState(false); // check whether image data is loaded
+  const [loaded, setLoaded] = useState(false); // whether image data has been received from axios
+  const [imageURL, setImageURL] = useState();   // image URL generated from image data
+  const { id } = useParams();   // post id
 
-  useEffect(handleGetImage, []);
+  useEffect(handleGetImage, []); 
 
-  var filename = "CloudClub.png";
+  // var filename = "CloudClub.png";  // Hardcoded image key
 
   function handleGetImage() {
-    console.log(loaded);
     axios
       .get("/getimage", {
-        // Call to back-end route
+        // Call to back-end API
         params: {
-          key: filename,
+          key: id,
         },
       })
       .then((res) => {
@@ -28,7 +28,7 @@ const Single = () => {
         // let fileExt = res.data.fileExtension;
         var blob = new Blob(
           [imagedata.buffer] /*{ type: "image/" + fileExt }*/
-        ); // Create Blob (Binary Large Object) from raw data
+        );    // Create Blob (Binary Large Object) from raw data
 
         let url = URL.createObjectURL(blob); // Create image source URL from Blob
         setImageURL(url);
@@ -36,6 +36,7 @@ const Single = () => {
       })
       .catch((err) => {
         console.log(err);
+        setLoaded(true);
       });
   }
 
@@ -43,10 +44,10 @@ const Single = () => {
     <div className="single">
       <div className="content">
         {/* <button onClick={handleGetImage}>Button</button> */}
-        {loaded == true ? (
-          <img src={imageURL} alt={filename} />
+        {imageURL ? (
+          <img src={imageURL} alt={id} />
         ) : (
-          <h2>loading...</h2>
+          loaded && <h2>Post Not Found!</h2>
         )}
 
         {/* <img src="https://images.pexels.com/photos/5850083/pexels-photo-5850083.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" /> */}

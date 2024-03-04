@@ -1,3 +1,4 @@
+// Back-end API to retrieve an image from S3
 module.exports = (app, s3Client) => {
   app.get("/getimage", (req, res) => {
     // var image;

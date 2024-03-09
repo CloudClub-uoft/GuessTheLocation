@@ -1,8 +1,9 @@
 module.exports = (app, s3Client) => {
   app.post("/postupload", (req, res) => {
+    console.log("upload")
     var file;
     var fileExtension;
-    // console.log(req.files);
+    console.log(req.files);
 
     // React axios upload
     file = req.files.file
@@ -24,5 +25,6 @@ module.exports = (app, s3Client) => {
         console.log("\nUploaded Object:\n", data);
       }
     });
+	res.send({});
   });
 };

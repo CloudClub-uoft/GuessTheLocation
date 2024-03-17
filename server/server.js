@@ -1,5 +1,5 @@
 const express = require("express");
-const session = require('express-session'); 
+// const session = require('express-session'); 
 const app = express();
 
 require("dotenv").config();
@@ -15,11 +15,11 @@ require("./routes/GET-image.js")(app, s3Client);
 app.use(express.json()); // Parse JSON request bodies with an increased limit
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data with an increased limit
 
-app.use(session({
-  secret: 'redissecretcloud',//newly-added, copied from .env, highl unsure
-  resave: false,
-  saveUninitialized: true
-}));
+// app.use(session({
+//   secret: 'redissecretcloud',//newly-added, copied from .env, highl unsure
+//   resave: false,
+//   saveUninitialized: true
+// }));
 
 // TODO: Configure database connections, authentication, and other application-level settings
 

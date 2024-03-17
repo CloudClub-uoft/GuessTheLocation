@@ -9,7 +9,6 @@ const Single = () => {
   const [loaded, setLoaded] = useState(false); // whether image data has been received from axios
   const [imageURL, setImageURL] = useState(); // image URL generated from image data
   const { id } = useParams(); // post id
-  // var filename = "CloudClub.png";  // Hardcoded image key
 
   useEffect(handleGetImage, []);
 
@@ -18,21 +17,16 @@ const Single = () => {
     axios
       .get(`/getimage/${id}`)
       .then((res) => {
-        let imagedata = new Uint8Array(res.data.image.data); // raw data of the image converted to uint8Array
-
-        // let fileExt = res.data.fileExtension;
-        var blob = new Blob(
-          [imagedata.buffer] /*{ type: "image/" + fileExt }*/
-        ); // Create Blob (Binary Large Object) from raw data
+        let imagedata = new Uint8Array(res.data.image.data);    // raw data of the image converted to uint8Array
+        var blob = new Blob([imagedata.buffer]);    // Create Blob (Binary Large Object) from raw data
 
         let url = URL.createObjectURL(blob); // Create image source URL from Blob
         setImageURL(url);
-        setLoaded(true);
       })
       .catch((err) => {
         console.log(err);
-        setLoaded(true);
       });
+      setLoaded(true);
   }
 
   return (

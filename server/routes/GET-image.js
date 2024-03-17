@@ -11,13 +11,15 @@ module.exports = (app, s3Client) => {
 
     s3Client.getObject(params, (err, data) => {
       if (err) {
-        console.log(err);
-        res.send({});
+        res.status(500).send({ message: "Image retrieval failed!" });
       } else {
         console.log(`Got image: ${key}`);
         let content = data.Body; // raw data of the image
         let fileExt = key.substring(key.lastIndexOf(".") + 1); // get file suffix
-        res.send({
+        
+        res.status(200).send(
+        { 
+          message: "Image retrieval successful!",
           image: content, // send to React front-end
           fileExtenstion: fileExt,
         });

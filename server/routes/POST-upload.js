@@ -1,12 +1,10 @@
 module.exports = (app, s3Client) => {
   app.post("/postupload", (req, res) => {
-    console.log("upload")
     var file;
     var fileExtension;
-    console.log(req.files);
 
     // React axios upload
-    file = req.files.file
+    file = req.files.file;
 
     // EJS (property is called "image" instead of "file")
     // file = req.files.image;
@@ -21,10 +19,11 @@ module.exports = (app, s3Client) => {
     s3Client.upload(params, function (err, data) {
       if (err) {
         console.log(err);
+        res.status(500).send({ message: "Image upload failed!" });
       } else {
         console.log("\nUploaded Object:\n", data);
+        res.status(200).send({ message: "Image upload successful!" });
       }
     });
-	res.send({});
   });
 };

@@ -1,5 +1,5 @@
 const db = require('../config/db');
-const s3Client = require("../config/s3");
+const s3Client = require("../config/s3setup");
 
 const getUsers = (req, res) => {
     db.query(`SELECT * FROM user_profile;`, function (error, results, fields) {

@@ -121,6 +121,7 @@ const OldHome = () => {
     e.preventDefault();
     axios.post('/make_guess',coordinates)
     .then((res)=>{
+      // TODO: better logging / error handling
       console.log(res)
     })
     .catch((err)=>console.log(err))

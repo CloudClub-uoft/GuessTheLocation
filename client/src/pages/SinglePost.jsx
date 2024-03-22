@@ -15,7 +15,7 @@ const Single = () => {
   function handleGetImage() {
     // Call to back-end API
     axios
-      .get(`/getimage/${id}`)
+      .get(`/posts/image/${id}`)
       .then((res) => {
         let imagedata = new Uint8Array(res.data.image.data);    // raw data of the image converted to uint8Array
         var blob = new Blob([imagedata.buffer]);    // Create Blob (Binary Large Object) from raw data
@@ -24,6 +24,7 @@ const Single = () => {
         setImageURL(url);
       })
       .catch((err) => {
+        // TODO: better error handling
         console.log(err);
       });
       setLoaded(true);

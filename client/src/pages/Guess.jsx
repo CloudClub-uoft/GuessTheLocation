@@ -85,7 +85,7 @@ const Guess = () => {
                 <div className='home2'>
 
                     <div className='button_container'>
-                        <button className='topMap'>TAKE A GUESS</button>
+                        <button className='topMap' onClick={updateCoordinates}>TAKE A GUESS</button>
                         <button className='topMap'>VIEW POST</button>
                         <button className='topMap'>LEADERBOARD</button>
                     </div>

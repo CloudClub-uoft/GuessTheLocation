@@ -30,24 +30,19 @@ const WritePost = () => {
           "content-type": "multipart/form-data",
         },
       };
-      // console.log(fileToUpload); // For testing
+
       axios
-        .post("/postupload", formData, config) // Call to backend API to upload the chosen file
+        .post("/posts/postImage", formData, config) // Call to backend API to upload the chosen file
         .then((res) => {
           // Success
-          console.log(res);
-          setUploadMessage(
-            'Successfully uploaded "' + fileToUpload.name + '"!'
-          );
+          setUploadMessage('Successfully uploaded "' + fileToUpload.name + '"!');
         })
         .catch((err) => {
+          // TODO: proper error handling
           // Error
           console.log(err);
         });
     }
-
-    // var formData = new FormData();
-    // var imagefile = document.querySelector('#file');
   }
 
   return (

@@ -1,5 +1,6 @@
 const db = require('../config/db');
-const s3Client = require("../config/s3");
+const s3Client = require("../config/s3setup");
+const { v4: uuidv4 } = require("uuid");
 const multer  = require('multer');
 
 const getPosts = (req, res) => {
@@ -30,6 +31,31 @@ const getPostWithId = (req, res) => {
             res.send("failure");
         }
         res.send(JSON.stringify(results[0]));
+    });
+}
+
+const getPostImageWithId = (req, res) => {
+    let key = req.params.postId;
+    // S3 GET request params
+    var params = {
+      Bucket: process.env.BUCKET_NAME,
+      Key: key,
+    };
+    
+    s3Client.getObject(params, (err, data) => {
+      if (err) {
+        res.status(500).send({ message: "Image retrieval failed!" });
+      } else {
+        let content = data.Body; // raw data of the image
+        let fileExt = key.substring(key.lastIndexOf(".") + 1); // get file suffix
+        
+        // send to React front-end
+        res.status(200).send({ 
+          message: "Image retrieval successful!",
+          image: content,
+          fileExtenstion: fileExt,
+        });
+      }
     });
 }
 
@@ -75,11 +101,36 @@ const addPost = (req, res) => {  // this only accepts multipart/form-data type a
     
 }
 
+const addPostImage = (req, res) => {
+    var file;
+    var fileExtension;
+
+    // React axios upload
+    file = req.files.file;
+    fileExtension = file.name.substring(file.name.lastIndexOf(".") + 1);
+
+    var params = {
+        Bucket: process.env.BUCKET_NAME,
+        // Key: file.name,
+        Key: (uuidv4() + "." + fileExtension),    // uuid key for the image
+        Body: file.data,
+    };
+    s3Client.upload(params, function (err, data) {
+        if (err) {
+        res.status(500).send({ message: "Image upload failed!" });
+        } else {
+        res.status(200).send({ message: "Image upload successful!" });
+        }
+    });
+}
+
 module.exports = {
     getPosts,
     getPostsByUser,
     getPostWithId,
+    getPostImageWithId,
     deletePostWithId,
     addPostMulterFields,
     addPost,
+    addPostImage,
 }

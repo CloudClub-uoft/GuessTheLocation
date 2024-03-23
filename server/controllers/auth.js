@@ -1,5 +1,5 @@
 const db = require('../config/db');
-const s3Client = require("../config/s3");
+const s3Client = require("../config/s3setup");
 
 const register = (req, res) => {
     const username = req.body.username;
@@ -41,9 +41,6 @@ const register = (req, res) => {
 const login = (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
-    console.log("we received...");
-    console.log(username);
-    console.log(password);
     // need to hash the password
     db.query(`SELECT * FROM GuessTheLocation.user_profile WHERE username='${username}' AND password='${password}';`, function (error, results, fields) {
         if (error) {

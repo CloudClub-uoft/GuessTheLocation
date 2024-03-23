@@ -1,45 +1,44 @@
 import React, { useState } from 'react';
-import {Link} from 'react-router-dom';
-import { GoogleMap, useJsApiLoader, Marker} from "@react-google-maps/api";
+import { Link } from 'react-router-dom';
+import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 import style from '../style.scss';
 import axios from 'axios';
 import HomePostCard from '../components/HomePostCard';
 import HomeSignupCard from '../components/HomeSignupCard';
 
 
-const nothing = () =>
-{
-  return(
+const nothing = () => {
+  return (
     <></>
   )
 }
 
-const HomePostCardTest = () =>{
+const HomePostCardTest = () => {
   let at = '@';
   let user = 'migs_111';
   let userString = at.concat(user);
   let postDate = "10/12/2111";
-  
+
   return (
     <div className='home'>
       <HomePostCard
-        username = {userString}
-        date = {postDate}
+        username={userString}
+        date={postDate}
       />
     </div>
   )
 }
 
-const HomeSignupCardTest = () =>{
-  return(
+const HomeSignupCardTest = () => {
+  return (
     <div className='test'>
-      <HomeSignupCard/>
+      <HomeSignupCard />
     </div>
   )
 }
 
-const Home = () =>{
-  
+const Home = () => {
+
   let user1 = 'tester_111';
   let user2 = 'tester_123';
   let user3 = 'tester_567';
@@ -51,8 +50,8 @@ const Home = () =>{
   let postDate = "10/12/2111";
 
 
-  return(
-    
+  return (
+
     <div className='new-home-page'>
       <div className='title-bar'>
         <div className='text-wrapper'>
@@ -60,30 +59,36 @@ const Home = () =>{
           <h1 className='title'>GUESS THE LOCATION</h1>
           <p className='game-description'>The ultimate location guessing game!</p>
         </div>
-        <HomeSignupCard/>
+        <HomeSignupCard />
       </div>
       <div className='text-container'>
         <h2>RECENT POSTS</h2>
       </div>
       <div className='postcard-container'>
         <HomePostCard
-          username = {userString1}
-          date = {postDate}
+          username={userString1}
+          date={postDate}
           className='postcard-1'
           key='postcard-1'
         />
         <HomePostCard
-          username = {userString2}
-          date = {postDate}
+          username={userString2}
+          date={postDate}
           className='postcard-2'
           key='postcard-2'
         />
         <HomePostCard
-          username = {userString3}
-          date = {postDate}
+          username={userString3}
+          date={postDate}
           className='postcard-3'
           key='postcard-3'
         />
+
+
+
+      </div>
+      <div className='button-guess-container'>
+        <a href='/guess' className='button-guess-page'>Take a Guess</a>
       </div>
     </div>
   )
@@ -92,16 +97,16 @@ const Home = () =>{
 
 const OldHome = () => {
 
-  const {isLoaded} = useJsApiLoader({
+  const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
   })
-  
-  const [map,setMap] = useState((null));
-  const center = {lat:0,lng:0};
-  const [markerPosition, setMarkerPosition] = useState({lat:0,lng:0});
-  const [markerKey,setMarkerKey] = useState(0);
-  const [coordinates,setCoordinates] = useState(null);
-  const [showCoordinates,setShowCoordinates] = useState(false);
+
+  const [map, setMap] = useState((null));
+  const center = { lat: 0, lng: 0 };
+  const [markerPosition, setMarkerPosition] = useState({ lat: 0, lng: 0 });
+  const [markerKey, setMarkerKey] = useState(0);
+  const [coordinates, setCoordinates] = useState(null);
+  const [showCoordinates, setShowCoordinates] = useState(false);
 
   const onClickMap = (e) => {
     setMarkerPosition({
@@ -113,21 +118,21 @@ const OldHome = () => {
     setCoordinates({ lat: e.latLng.lat(), lng: e.latLng.lng() });
   };
 
-  const updateCoordinates = (e) =>{
+  const updateCoordinates = (e) => {
     setCoordinates(markerPosition);
     setShowCoordinates(true);
 
 
     e.preventDefault();
-    axios.post('/make_guess',coordinates)
-    .then((res)=>{
-      // TODO: better logging / error handling
-      console.log(res)
-    })
-    .catch((err)=>console.log(err))
+
+    axios.post('/make_guess', coordinates)
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => console.log(err))
   };
-  
-  
+
+
   // For the actual website we'll make a call to the backend to get images dynamically
   const dummy_posts = [
     {
@@ -135,7 +140,7 @@ const OldHome = () => {
       title: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat doloribus nulla voluptatem optio. In doloremque quibusdam optio debitis provident odit.",
       img: "https://images.pexels.com/photos/5850083/pexels-photo-5850083.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      
+
     },
     {
       id: 2,
@@ -149,7 +154,7 @@ const OldHome = () => {
       desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat doloribus nulla voluptatem optio. In doloremque quibusdam optio debitis provident odit.",
       img: "https://images.pexels.com/photos/5282269/pexels-photo-5282269.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     },
-    
+
     {
       id: 4,
       title: "Lorem, ipsum.",
@@ -195,18 +200,18 @@ const OldHome = () => {
       </div>
     </div>
   )
-  if (!isLoaded){
+  if (!isLoaded) {
     return commonLoad;
   }
-  else{
-    return(
+  else {
+    return (
       <>
         {commonLoad}
         <div className='home2'>
-          <button onClick = {updateCoordinates}> GOOGLE GUESS </button>
-          <GoogleMap 
+          <button onClick={updateCoordinates}> GOOGLE GUESS </button>
+          <GoogleMap
             center={markerPosition}
-            zoom={2.5} 
+            zoom={2.5}
             mapContainerClassName='map-container'
             options={{
               streetViewControl: false,
@@ -215,8 +220,8 @@ const OldHome = () => {
             }}
             onLoad={map => setMap(map)}
             onClick={onClickMap}
-            > 
-            <Marker key={markerKey} position={markerKey?markerPosition:{lat:null,lng:null}}/>
+          >
+            <Marker key={markerKey} position={markerKey ? markerPosition : { lat: null, lng: null }} />
           </GoogleMap>
           {showCoordinates && (
             <div>
@@ -225,9 +230,9 @@ const OldHome = () => {
             </div>
           )}
         </div>
-      </>  
-    ); 
-  }        
+      </>
+    );
+  }
 }
 
 export default Home;

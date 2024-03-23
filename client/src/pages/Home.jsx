@@ -124,6 +124,7 @@ const OldHome = () => {
 
 
     e.preventDefault();
+
     axios.post('/make_guess', coordinates)
       .then((res) => {
         console.log(res)

@@ -7,38 +7,8 @@ import HomePostCard from '../components/HomePostCard';
 import HomeSignupCard from '../components/HomeSignupCard';
 
 
-const nothing = () => {
-  return (
-    <></>
-  )
-}
-
-const HomePostCardTest = () => {
-  let at = '@';
-  let user = 'migs_111';
-  let userString = at.concat(user);
-  let postDate = "10/12/2111";
-
-  return (
-    <div className='home'>
-      <HomePostCard
-        username={userString}
-        date={postDate}
-      />
-    </div>
-  )
-}
-
-const HomeSignupCardTest = () => {
-  return (
-    <div className='test'>
-      <HomeSignupCard />
-    </div>
-  )
-}
-
-const Home = () => {
-
+const Home = () =>{
+  
   let user1 = 'tester_111';
   let user2 = 'tester_123';
   let user3 = 'tester_567';

@@ -6,14 +6,6 @@ import axios from 'axios';
 import HomePostCard from '../components/HomePostCard';
 import HomeSignupCard from '../components/HomeSignupCard';
 
-
-const nothing = () => {
-    return (
-        <></>
-    )
-}
-
-
 const Guess = () => {
 
     const { isLoaded } = useJsApiLoader({
@@ -21,13 +13,23 @@ const Guess = () => {
     })
 
     const [map, setMap] = useState((null));
-    const center = { lat: 0, lng: 0 };
+    const [center, setCenter] = useState({lat: 0, lng: 0})
     const [markerPosition, setMarkerPosition] = useState({ lat: 0, lng: 0 });
     const [markerKey, setMarkerKey] = useState(0);
     const [coordinates, setCoordinates] = useState(null);
     const [showCoordinates, setShowCoordinates] = useState(false);
 
-    const onClickMap = (e) => {
+    // For navigating between the three panels
+    const [selectedPanel, setSelectedPanel] = useState(null);
+    const handleOnClick = (panel, event) => {
+        setSelectedPanel(panel);
+        if (panel === 'map') {
+            updateCoordinates(event);
+        }
+    }
+
+
+    const onClickMap = (e) => {        
         setMarkerPosition({
             lat: e.latLng.lat(),
             lng: e.latLng.lng(),
@@ -40,7 +42,6 @@ const Guess = () => {
     const updateCoordinates = (e) => {
         setCoordinates(markerPosition);
         setShowCoordinates(true);
-
 
         e.preventDefault();
         axios.post('/make_guess', coordinates)
@@ -85,17 +86,20 @@ const Guess = () => {
                 <div className='home2'>
 
                     <div className='button_container'>
-                        <button className='topMap' onClick={updateCoordinates}>TAKE A GUESS</button>
-                        <button className='topMap'>VIEW POST</button>
-                        <button className='topMap'>LEADERBOARD</button>
+                        <button className='topMap' onClick={(event) => handleOnClick('map', event)}>TAKE A GUESS</button>
+                        <button className='topMap' onClick={() => handleOnClick('post')}>VIEW POST</button>
+                        <button className='topMap' onClick={() => handleOnClick('leaderboard')}>LEADERBOARD</button>
                     </div>
+
+                    {selectedPanel === 'map' &&
                     <GoogleMap
-                        center={markerPosition}
+                        center={center}
                         zoom={2.5}
-                        mapContainerClassName='map-container'
+                        mapContainerClassName='guess-panel-container'
                         options={{
                             streetViewControl: false,
                             fullscreenControl: false,
+                            gestureHandling: 'greedy',
                             minZoom: 2.5,
                         }}
                         onLoad={map => setMap(map)}
@@ -103,14 +107,16 @@ const Guess = () => {
                     >
                         <Marker key={markerKey} position={markerKey ? markerPosition : { lat: null, lng: null }} />
                     </GoogleMap>
-                    {showCoordinates && (
+                    }
+                    {(selectedPanel === 'map' && showCoordinates) && (
                         <div>
                             <p>Latitude: {coordinates ? coordinates.lat : ''}</p>
                             <p>Longitude: {coordinates ? coordinates.lng : ''}</p>
                         </div>
                     )}
-
-
+                    {selectedPanel === 'post' && <><div className='guess-panel-container'>Post</div></>}
+                    {selectedPanel === 'leaderboard' && <><div className='guess-panel-container'>Leaderboard</div></>}
+                    
                 </div>
             </>
         );

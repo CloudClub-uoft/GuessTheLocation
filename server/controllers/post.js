@@ -3,7 +3,7 @@ const s3Client = require("../config/s3setup");
 const { v4: uuidv4 } = require("uuid");
 const multer  = require('multer');
 
-const getPosts = (req, res) => {
+const getAllPosts = (req, res) => {
     db.query(`SELECT * FROM post;`, function (error, results, fields) {
         if (error) {
             res.status(400);
@@ -13,8 +13,21 @@ const getPosts = (req, res) => {
     });
 }
 
+const getRecentPosts = (req, res) => {
+    // TODO: edge case when request n posts but database has fewer than n posts total
+    const n = req.params.n;
+    db.query(`SELECT * FROM post ORDER BY postTime DESC LIMIT ${n};`, function (error, results, fields) {
+        if (error) {
+            res.status(400);
+            res.send("failure");
+        }
+        res.send(JSON.stringify(results));
+    });
+}
+
 const getPostsByUser = (req, res) => {
-    db.query(`SELECT * FROM post WHERE userID = ${req.params.userId};`, function (error, results, fields) {
+    const userId = req.params.userId;
+    db.query(`SELECT * FROM post WHERE userID = ${userId};`, function (error, results, fields) {
         if (error) {
             res.status(400);
             res.send("failure");
@@ -125,7 +138,7 @@ const addPostImage = (req, res) => {
 }
 
 module.exports = {
-    getPosts,
+    getAllPosts,
     getPostsByUser,
     getPostWithId,
     getPostImageWithId,
@@ -133,4 +146,5 @@ module.exports = {
     addPostMulterFields,
     addPost,
     addPostImage,
+    getRecentPosts,
 }

@@ -17,12 +17,17 @@ const Login = () => {
         username,
         password
       });
-
-      
-      console.log('Login successful!', response.data);
+      window.alert('Login successful!');
+      console.log(response.data);
       // Handle successful login, e.g., set authentication tokens, redirect, etc.
     } catch (error) {
-      console.error('Login failed!', error);
+      if (error.response.status === 401) {
+        window.alert('Password incorrect!');
+      }
+      else{
+        window.alert('Login failed! The account might have not been registered!');
+      }
+      console.error(error);
       // Handle login failure, show error message, etc.
     }
   };

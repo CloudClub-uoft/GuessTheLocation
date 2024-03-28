@@ -4,8 +4,6 @@ import axios from 'axios';
 const HomeSignupCard = () =>{
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-    const [firstname, setFirstname] = useState('');
-    const [lastname, setLastname] = useState('');
     const [password, setPassword] = useState('');
   
   
@@ -14,13 +12,21 @@ const HomeSignupCard = () =>{
       e.preventDefault();
   
       try {
-        const response = await axios.post('/auth/register', {username, email, firstname, lastname, password});
-  
+        const response = await axios.post('/auth/register', {username, email, password});
+        
         // Handle the response as needed (e.g., show a success message)
-        console.log('Registration successful:', response.data);
+        window.alert('Registration successful!');
+        console.log(response.data);
+
       } catch (error) {
         // Handle errors (e.g., show an error message)
-        console.error('Registration failed:', error);
+        if (error.response.status === 403) {
+            window.alert('This account is already registered!');
+          }
+          else{
+            window.alert('Registration failed!');
+          }
+        console.error(error);
       }
     };
     
@@ -35,14 +41,6 @@ const HomeSignupCard = () =>{
                     <div>
                         <label className='username-label' for='username'>Username:</label>
                         <input className='username-input' id="username" name="username" type="text" required value={username} onChange={(e) => setUsername(e.target.value)}/>
-                    </div>
-                    <div>
-                        <label className='firstname-label' for='firstname'>First name:</label>
-                        <input className='firstname-input' id="firstname" name="firstname" type="text" required value={firstname} onChange={(e) => setFirstname(e.target.value)}/>
-                    </div>
-                    <div>
-                        <label className='lastname-label' for='lastname'>Last name:</label>
-                        <input className='lastname-input' id="lastname" name="lastname" type="text" required value={lastname} onChange={(e) => setLastname(e.target.value)}/>
                     </div>
                     <div>
                         <label className='pass-label' for='pass'>Password: </label>

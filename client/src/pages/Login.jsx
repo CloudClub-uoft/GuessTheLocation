@@ -19,8 +19,6 @@ const Login = () => {
       });
       window.alert('Login successful!');
       console.log(response.data);
-      window.location.href = "/Home";
-      console.log('redirected');
       // Handle successful login, e.g., set authentication tokens, redirect, etc.
     } catch (error) {
       if (error.response.status === 401) {

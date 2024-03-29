@@ -13,7 +13,7 @@ const HomePostCard = ({username, date}) =>{
             </div>
             <img className="image" alt="test image" src={testPic}/>
         </a>
-    )
+    )   
 }
 
 export default HomePostCard

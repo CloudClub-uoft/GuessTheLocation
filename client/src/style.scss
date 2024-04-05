@@ -621,6 +621,45 @@ $lightGreen: #b9e7e7;
   }
 
   //WRITE
+  .write {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    .page-title {   
+      font-family: "Bungee";
+      font-size: 32px;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      line-height: 0px;
+    }
+
+    .page-tip {
+      font-family: "Jura";
+      font-size: 14px;
+      font-weight: 600;
+      width: 80%;
+      margin-bottom: 5px;
+    }
+
+    .write__cards {
+      display: flex;
+      flex-direction: row;
+      gap: 15px;
+      text-align: center;
+
+      .write__left-card-text,
+      .write__right-card-text {
+        margin-bottom: 20px;
+      }
+
+      .upload-arrow-image {
+        margin-top: 50%;
+        height: 130px;
+      }
+    }
+  }
 
   .add {
     margin-top: 20px;

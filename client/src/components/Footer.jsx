@@ -1,5 +1,6 @@
 import React from 'react'
 import Logo from "../img/temp2.jpg"
+// Decribe the follong 
 const Footer = () => {
   return (
     <footer>
@@ -8,5 +9,6 @@ const Footer = () => {
     </footer>
   )
 }
+
 
 export default Footer;

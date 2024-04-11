@@ -208,52 +208,68 @@ $lightGreen: #b9e7e7;
 
   .home-post {
     position: relative;
-    height: 327px;
-    width: 379px;
-
+    width: 100%; /* Fill the width of the container */
+    margin-bottom: 20px; /* Optional: If you need some space between the postcards */
+    //height: calc(100% * (327 / 379)); this does not work
+    // height: auto;
     .rectangle {
       background-color: #eaeaea;
       border-radius: 10px;
       box-shadow: 0px 5px 5px #00000040;
-      height: 327px;
+      // height: 327px;
       left: 0;
       position: relative;
       top: 0;
-      width: 379px;
-
-      .text-wrapper,
-      .text-wrapper-2 {
+      width: 100%;
+      overflow: hidden; /* Ensures that the shadow and border radius is applied correctly */
+      &::before {
+        content: "";
+        display: block;
+        padding-top: calc(100% * (327 / 379)); /* Aspect ratio */
+      }
+      .text-wrapper,.text-wrapper-2 {
         color: #000000;
         font-family: "Jura";
-        font-size: 22.5px;
+        font-size: 1.5vw;
         font-weight: 700;
         letter-spacing: 0;
         line-height: normal;
         position: absolute;
-        top: 288.5px;
+        bottom: 0.8vw; 
+        // top: 288.5px;
       }
-
       .text-wrapper {
         left: 15px;
       }
-
       .text-wrapper-2 {
         right: 15px;
       }
     }
-
+  
     .image {
-      height: 272px;
+      height: calc(90%); /* Leave space for the text */
       left: 0;
       object-fit: cover;
       position: absolute;
       top: 0;
-      width: 379px;
+      width: 100%;
       border-radius: 10px 10px 0 0px;
     }
   }
-
-  .home-post:active {
+  
+  @media (max-width: 1024px) {
+    .home-post {
+      flex: 0 1 calc(50% - 20px); // On screens smaller than 1024px, the postcards will take up half the container's width minus 20 pixels, resulting in 2 per row.
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .home-post {
+      flex: 0 1 calc(100% - 20px); // On screens smaller than 768px, the postcards will take up the full container's width minus 20 pixels, resulting in 1 per row.
+    }
+  }
+  
+  .home-post:active{
     transform: scale(96%);
   }
 
@@ -347,11 +363,21 @@ $lightGreen: #b9e7e7;
       flex-direction: row;
       justify-content: space-around;
       align-items: center;
+      background-repeat: no-repeat; // Ensures the background doesn't repeat
+      //position:relative;
       background: url(img/homebackground.jpg);
       background-size: contain;
       height: 431px;
       border-radius: 10px;
             
+      //border:3px solid blue;
+      @media (max-width: 768px) {
+        flex-direction: column; // Stacks the elements vertically on smaller screens
+        justify-content: center; // Centers the items vertically
+        align-items: flex-start; // Aligns items to the start of the flex container
+        height: auto; // Height becomes automatic to contain all the items
+        padding: 20px; // Add some padding to not touch the edges
+      }
       .text-wrapper{
         p{
           font-family: "Jura";

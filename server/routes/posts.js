@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { getAllPosts, getPostsByUser, getPostWithId, getPostImageWithId, deletePostWithId, addPostMulterFields, addPost, addPostImage } = require('../controllers/post.js');
+const { getAllPosts, getPostsByUser, getPostWithId, getPostImageWithId, deletePostWithId, addPostMulterFields, addPost, addPostImage, getRecentPosts } = require('../controllers/post.js');
 
 // Database query to get all posts
 //Gotta use /posts/postId

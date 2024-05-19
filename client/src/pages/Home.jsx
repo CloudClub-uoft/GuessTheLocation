@@ -15,7 +15,6 @@ const Home = () => {
       try {
         // TODO: don't hard code this route - use .env variables
         const response = await axios.get('http://localhost:3000/posts/recent/3');
-        //console.log(response.data)
         setPosts(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -38,8 +37,9 @@ const Home = () => {
         <h2>RECENT POSTS</h2>
       </div>
       <div className='postcard-container'>
-        {posts.map((post, index) => (
+        {posts.map((post, index, postID) => (
           <HomePostCard
+            postID={post.postID}
             key={index}
             username={'@'.concat(post.userID)}
             date={post.postTime.substring(0, 10)}

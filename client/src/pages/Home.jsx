@@ -36,6 +36,7 @@ const Home = () => {
       <div className='text-container'>
         <h2>RECENT POSTS</h2>
       </div>
+      
       <div className='postcard-container'>
         {posts.map((post, index, postID) => (
           <HomePostCard
@@ -46,6 +47,8 @@ const Home = () => {
           />
         ))}
       </div>
+      <div className='button-guess-container'>
+        <a href='/guess' className='button-guess-page'>Take a Guess</a></div>
     </div>
   )
 

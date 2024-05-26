@@ -1,9 +1,9 @@
 const db = require('../config/db');
 const s3Client = require("../config/s3setup");
 const { v4: uuidv4 } = require("uuid");
-const multer  = require('multer');
+const multer = require('multer');
 
-const getPosts = (req, res) => {
+const getAllPosts = (req, res) => {
     db.query(`SELECT * FROM post;`, function (error, results, fields) {
         if (error) {
             res.status(400);
@@ -13,8 +13,21 @@ const getPosts = (req, res) => {
     });
 }
 
+const getRecentPosts = (req, res) => {
+    // TODO: edge case when request n posts but database has fewer than n posts total
+    const n = req.params.n;
+    db.query(`SELECT * FROM post ORDER BY postTime DESC LIMIT ${n};`, function (error, results, fields) {
+        if (error) {
+            res.status(400);
+            res.send("failure");
+        }
+        res.send(JSON.stringify(results));
+    });
+}
+
 const getPostsByUser = (req, res) => {
-    db.query(`SELECT * FROM post WHERE userID = ${req.params.userId};`, function (error, results, fields) {
+    const userId = req.params.userId;
+    db.query(`SELECT * FROM post WHERE userID = ${userId};`, function (error, results, fields) {
         if (error) {
             res.status(400);
             res.send("failure");
@@ -36,26 +49,27 @@ const getPostWithId = (req, res) => {
 
 const getPostImageWithId = (req, res) => {
     let key = req.params.postId;
+    console.log(key);
     // S3 GET request params
     var params = {
-      Bucket: process.env.BUCKET_NAME,
-      Key: key,
+        Bucket: process.env.BUCKET_NAME,
+        Key: key,
     };
-    
+
     s3Client.getObject(params, (err, data) => {
-      if (err) {
-        res.status(500).send({ message: "Image retrieval failed!" });
-      } else {
-        let content = data.Body; // raw data of the image
-        let fileExt = key.substring(key.lastIndexOf(".") + 1); // get file suffix
-        
-        // send to React front-end
-        res.status(200).send({ 
-          message: "Image retrieval successful!",
-          image: content,
-          fileExtenstion: fileExt,
-        });
-      }
+        if (err) {
+            res.status(500).send({ message: "Image retrieval failed!" });
+        } else {
+            let content = data.Body; // raw data of the image
+            let fileExt = key.substring(key.lastIndexOf(".") + 1); // get file suffix
+
+            // send to React front-end
+            res.status(200).send({
+                message: "Image retrieval successful!",
+                image: content,
+                fileExtenstion: fileExt,
+            });
+        }
     });
 }
 
@@ -80,9 +94,9 @@ const addPost = (req, res) => {  // this only accepts multipart/form-data type a
     const locationLat = req.body.locationLat;
     const locationLong = req.body.locationLong;
     const file = req.file;  // documentation on this seems to be a little hazy
-    
+
     file.path;  // this is where the uploaded image is. it should go somewhere in the database but there's no entry for it
-    
+
     db.query(`SELECT userId FROM user_profile WHERE "username"=${username};`, function (error, results, fields) {
         if (error) {
             res.status(400);
@@ -98,7 +112,7 @@ const addPost = (req, res) => {  // this only accepts multipart/form-data type a
             res.send("success");
         });
     });
-    
+
 }
 
 const addPostImage = (req, res) => {
@@ -109,10 +123,22 @@ const addPostImage = (req, res) => {
     file = req.files.file;
     fileExtension = file.name.substring(file.name.lastIndexOf(".") + 1);
 
+    const userID = 333;
+    const locationLat = 0;
+    const locationLong = 0;
+    const postID = (uuidv4() + "." + fileExtension);
+    db.query(`INSERT INTO post (userID, postID,locationLat, locationLong, postTime) VALUES('${userID}','${postID}','${locationLat}','${locationLong}', CURRENT_TIMESTAMP);`,  function (error, results, fields) {
+        if (error) {
+            res.status(400);
+            console.log(error);
+            res.send("failure");
+        }
+
     var params = {
         Bucket: process.env.BUCKET_NAME,
         // Key: file.name,
-        Key: (uuidv4() + "." + fileExtension),    // uuid key for the image
+        // Key: (uuidv4() + "." + fileExtension),    // uuid key for the image
+        Key: postID,    // uuid key for the image
         Body: file.data,
     };
     s3Client.upload(params, function (err, data) {
@@ -122,10 +148,11 @@ const addPostImage = (req, res) => {
         res.status(200).send({ message: "Image upload successful!" });
         }
     });
+});
 }
 
 module.exports = {
-    getPosts,
+    getAllPosts,
     getPostsByUser,
     getPostWithId,
     getPostImageWithId,
@@ -133,4 +160,5 @@ module.exports = {
     addPostMulterFields,
     addPost,
     addPostImage,
+    getRecentPosts,
 }

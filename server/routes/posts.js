@@ -3,10 +3,15 @@
 const express = require('express');
 const router = express.Router();
 
-const { getPosts, getPostsByUser, getPostWithId, getPostImageWithId, deletePostWithId, addPostMulterFields, addPost, addPostImage } = require('../controllers/post.js');
+const { getAllPosts, getPostsByUser, getPostWithId, getPostImageWithId, deletePostWithId, addPostMulterFields, addPost, addPostImage, getRecentPosts } = require('../controllers/post.js');
 
 // Database query to get all posts
-router.get('/', getPosts);
+//Gotta use /posts/postId
+router.get('/', getAllPosts);
+
+// Get n most recent posts
+// TODO: parameterize with /recent/:n
+router.get('/recent/:n', getRecentPosts);
 
 // Logic to get posts from user with ID
 router.get('/user/:userId', getPostsByUser);

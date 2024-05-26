@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 import style from '../style.scss';
@@ -7,21 +7,23 @@ import HomePostCard from '../components/HomePostCard';
 import HomeSignupCard from '../components/HomeSignupCard';
 
 
-const Home = () =>{
-  
-  let user1 = 'tester_111';
-  let user2 = 'tester_123';
-  let user3 = 'tester_567';
-
-  let userString1 = '@'.concat(user1);
-  let userString2 = '@'.concat(user2);
-  let userString3 = '@'.concat(user3);
-
-  let postDate = "10/12/2111";
-
+const Home = () => {
+  //getting userData with postID
+  const [posts, setPosts] = useState([])
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // TODO: don't hard code this route - use .env variables
+        const response = await axios.get('http://localhost:3000/posts/recent/3');
+        setPosts(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, [])
 
   return (
-
     <div className='new-home-page'>
       <div className='title-bar'>
         <div className='text-wrapper'>
@@ -34,30 +36,19 @@ const Home = () =>{
       <div className='text-container'>
         <h2>RECENT POSTS</h2>
       </div>
+      
       <div className='postcard-container'>
-        <HomePostCard
-          username={userString1}
-          date={postDate}
-          className='postcard-1'
-          key='postcard-1'
-        />
-        <HomePostCard
-          username={userString2}
-          date={postDate}
-          className='postcard-2'
-          key='postcard-2'
-        />
-        <HomePostCard
-          username={userString3}
-          date={postDate}
-          className='postcard-3'
-          key='postcard-3'
-        />
-
+        {posts.map((post, index, postID) => (
+          <HomePostCard
+            postID={post.postID}
+            key={index}
+            username={'@'.concat(post.userID)}
+            date={post.postTime.substring(0, 10)}
+          />
+        ))}
       </div>
       <div className='button-guess-container'>
-        <a href='/guess' className='button-guess-page'>Take a Guess</a>
-      </div>
+        <a href='/guess' className='button-guess-page'>Take a Guess</a></div>
     </div>
   )
 

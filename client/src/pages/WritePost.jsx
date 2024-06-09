@@ -122,11 +122,11 @@ const WritePost = () => {
             </p>
             <div className="home-post">
               <div className="rectangle">
-                <div className="write-post-map">
+                <div className="image">
                   <GoogleMap
                     center={center}
                     zoom={2.5}
-                    mapContainerClassName='write-post-map'
+                    mapContainerClassName='write-post-map-container'
                     options={{
                       streetViewControl: false,
                       fullscreenControl: false,

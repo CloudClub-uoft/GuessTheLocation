@@ -90,7 +90,6 @@ const WritePost = () => {
             <p className="write__left-card-text">
               <b>step 1:</b> upload photo
             </p>
-
             <label for="getFile">
               <input
                 id="getFile"
@@ -98,7 +97,6 @@ const WritePost = () => {
                 name="image"
                 accept="image/*"
                 onChange={handlePreviewImg}
-                className=""
                 hidden
               />
               {/* Same component as Home Post Card but no "a" tag */}
@@ -113,13 +111,8 @@ const WritePost = () => {
                       </svg>
                     }
                   </div>
-
                   <div className="text-wrapper">User 1</div>
                   <div className="text-wrapper-2">Current Date</div>
-                </div>
-
-                <div>
-
                 </div>
               </div>
             </label>
@@ -151,7 +144,6 @@ const WritePost = () => {
                 <div className="text-wrapper">long: {markerPosition.lat.toFixed(2)}</div>
                 <div className="text-wrapper-2">lat: {markerPosition.lng.toFixed(2)}</div>
               </div>
-
             </div>
           </div>
         </div>

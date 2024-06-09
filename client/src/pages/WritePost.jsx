@@ -69,8 +69,6 @@ const WritePost = () => {
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
     });
-    console.log(e.latLng.lat());
-    console.log(e.latLng.lng());
     setMarkerKey(markerKey + 1);
     setShowCoordinates(false);
     setCoordinates({ lat: e.latLng.lat(), lng: e.latLng.lng() });

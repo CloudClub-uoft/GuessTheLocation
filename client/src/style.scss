@@ -208,8 +208,11 @@ $lightGreen: #b9e7e7;
 
   .home-post {
     position: relative;
-    width: 100%; /* Fill the width of the container */
-    margin-bottom: 20px; /* Optional: If you need some space between the postcards */
+    width: 100%;
+    /* Fill the width of the container */
+    margin-bottom: 20px;
+
+    /* Optional: If you need some space between the postcards */
     //height: calc(100% * (327 / 379)); this does not work
     // height: auto;
     .rectangle {
@@ -221,13 +224,18 @@ $lightGreen: #b9e7e7;
       position: relative;
       top: 0;
       width: 100%;
-      overflow: hidden; /* Ensures that the shadow and border radius is applied correctly */
+      overflow: hidden;
+
+      /* Ensures that the shadow and border radius is applied correctly */
       &::before {
         content: "";
         display: block;
-        padding-top: calc(100% * (327 / 379)); /* Aspect ratio */
+        padding-top: calc(100% * (327 / 379));
+        /* Aspect ratio */
       }
-      .text-wrapper,.text-wrapper-2 {
+
+      .text-wrapper,
+      .text-wrapper-2 {
         color: #000000;
         font-family: "Jura";
         font-size: 1.5vw;
@@ -235,19 +243,22 @@ $lightGreen: #b9e7e7;
         letter-spacing: 0;
         line-height: normal;
         position: absolute;
-        bottom: 0.8vw; 
+        bottom: 0.8vw;
         // top: 288.5px;
       }
+
       .text-wrapper {
         left: 15px;
       }
+
       .text-wrapper-2 {
         right: 15px;
       }
     }
-  
+
     .image {
-      height: calc(90%); /* Leave space for the text */
+      height: calc(90%);
+      /* Leave space for the text */
       left: 0;
       object-fit: cover;
       position: absolute;
@@ -256,20 +267,20 @@ $lightGreen: #b9e7e7;
       border-radius: 10px 10px 0 0px;
     }
   }
-  
+
   @media (max-width: 1024px) {
     .home-post {
       flex: 0 1 calc(50% - 20px); // On screens smaller than 1024px, the postcards will take up half the container's width minus 20 pixels, resulting in 2 per row.
     }
   }
-  
+
   @media (max-width: 768px) {
     .home-post {
       flex: 0 1 calc(100% - 20px); // On screens smaller than 768px, the postcards will take up the full container's width minus 20 pixels, resulting in 1 per row.
     }
   }
-  
-  .home-post:active{
+
+  .home-post:active {
     transform: scale(96%);
   }
 
@@ -369,7 +380,7 @@ $lightGreen: #b9e7e7;
       background-size: contain;
       height: 431px;
       border-radius: 10px;
-            
+
       //border:3px solid blue;
       @media (max-width: 768px) {
         flex-direction: column; // Stacks the elements vertically on smaller screens
@@ -378,8 +389,9 @@ $lightGreen: #b9e7e7;
         height: auto; // Height becomes automatic to contain all the items
         padding: 20px; // Add some padding to not touch the edges
       }
-      .text-wrapper{
-        p{
+
+      .text-wrapper {
+        p {
           font-family: "Jura";
           font-weight: 700;
           font-size: 25px;
@@ -409,33 +421,39 @@ $lightGreen: #b9e7e7;
       column-gap: 40px;
       //border: 2px solid green;
 
-      .postcard-1,.postcard-2,.postcard-3{
-      }
+      .postcard-1,
+      .postcard-2,
+      .postcard-3 {}
     }
 
   }
-  .community-posts{
-    display:flex;
+
+  .community-posts {
+    display: flex;
     flex-direction: column;
-    gap:30px;
-    .text-wrapper{
+    gap: 30px;
+
+    .text-wrapper {
       text-align: center;
       line-height: 10px;
-      .page-title{
+
+      .page-title {
         font-family: "Bungee";
         font-size: 40px;
         text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.25);
       }
-      p{
+
+      p {
         align-self: center;
         font-family: "Jura";
         font-weight: 700;
         font-size: 20px;
       }
     }
-    .posts-wrapper{
-      display:flex;
-      flex-direction:row;
+
+    .posts-wrapper {
+      display: flex;
+      flex-direction: row;
       justify-content: space-around;
       flex-wrap: wrap;
       gap: 30px;
@@ -620,6 +638,83 @@ $lightGreen: #b9e7e7;
   }
 
   //WRITE
+  .write {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    .page-title {
+      font-family: "Bungee";
+      font-size: 32px;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      line-height: 0px;
+    }
+
+    .page-tip {
+      font-family: "Jura";
+      font-size: 14px;
+      font-weight: 600;
+      width: 80%;
+      margin-bottom: 5px;
+    }
+
+    .write__cards {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      text-align: center;
+      margin-bottom: 40px;
+
+      .write__left-card {
+        width: 379px;
+
+        .write__left-card-text {
+          margin-bottom: 20px;
+        }
+
+        .upload-arrow-image {
+          width: 12%;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+        }
+      }
+
+      .write__right-card {
+        width: 379px;
+
+        .write__right-card-text {
+          margin-bottom: 20px;
+        }
+
+        .write-post-map-container {
+          height: 100%;
+        }
+      }
+    }
+
+    .post-submit-button {
+      border-radius: 10px;
+      color: #7CBD9A;
+      font-family: "Bungee";
+      font-size: 26px;
+      // line-height: 120%;
+    }
+
+    .post-submit-button:active {
+      transform: scale(96%);
+    }
+
+    .upload-message {
+      font-family: "Jura";
+      font-size: 20px;
+      margin-top: 16px;
+    }
+  }
 
   .add {
     margin-top: 20px;

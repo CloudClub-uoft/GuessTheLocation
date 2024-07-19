@@ -39,12 +39,16 @@ const Guess = () => {
         setMarkerKey(markerKey + 1);
         setShowCoordinates(false);
         setCoordinates({ lat: e.latLng.lat(), lng: e.latLng.lng() });
-        axios.post('/make_guess/process_guess', { lat: e.latLng.lat(), lng: e.latLng.lng() })
+        axios
+            .post('/make_guess/process_guess', { lat: e.latLng.lat(), lng: e.latLng.lng() })
             .then((res) => {
                 setDistance(res.data.distance);
                 setScore(res.data.score);
-                console.log(res);
-            });
+            })
+            .catch((err) => {
+                // TODO: better error handling
+                console.log(err);
+            })
     };
 
     const updateCoordinates = (e) => {
@@ -124,7 +128,7 @@ const Guess = () => {
                     )}
                     {selectedPanel === 'post' && <><div className='guess-panel-container'>Post</div></>}
                     {selectedPanel === 'leaderboard' && <><div className='guess-panel-container'>Leaderboard</div></>}
-                    <p> Distance: {Math.round(distance)} km, Score: {Math.round(score) } pts</p>
+                    <p> Distance: {Math.round(distance)} km, Score: {Math.round(score)} pts</p>
                 </div>
             </>
         );

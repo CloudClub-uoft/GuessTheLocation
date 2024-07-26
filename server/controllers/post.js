@@ -124,32 +124,33 @@ const addPostImage = (req, res) => {
     fileExtension = file.name.substring(file.name.lastIndexOf(".") + 1);
 
     const userID = 333;
-    const locationLat = 0;
-    const locationLong = 0;
+    const locationLat = req.body.lat;
+    const locationLong = req.body.lng;
     const postID = (uuidv4() + "." + fileExtension);
-    db.query(`INSERT INTO post (userID, postID,locationLat, locationLong, postTime) VALUES('${userID}','${postID}','${locationLat}','${locationLong}', CURRENT_TIMESTAMP);`,  function (error, results, fields) {
+    db.query(`INSERT INTO post (userID, postID,locationLat, locationLong, postTime) VALUES('${userID}','${postID}','${locationLat}','${locationLong}', CURRENT_TIMESTAMP);`, function (error, results, fields) {
         if (error) {
             res.status(400);
             console.log(error);
             res.send("failure");
         }
 
-    var params = {
-        Bucket: process.env.BUCKET_NAME,
-        // Key: file.name,
-        // Key: (uuidv4() + "." + fileExtension),    // uuid key for the image
-        Key: postID,    // uuid key for the image
-        Body: file.data,
-    };
-    s3Client.upload(params, function (err, data) {
-        if (err) {
-        res.status(500).send({ message: "Image upload failed!" });
-        } else {
-        res.status(200).send({ message: "Image upload successful!" });
-        }
+        var params = {
+            Bucket: process.env.BUCKET_NAME,
+            // Key: file.name,
+            // Key: (uuidv4() + "." + fileExtension),    // uuid key for the image
+            Key: postID,    // uuid key for the image
+            Body: file.data,
+        };
+        s3Client.upload(params, function (err, data) {
+            if (err) {
+                res.status(500).send({ message: "Image upload failed!" });
+            } else {
+                res.status(200).send({ message: "Image upload successful!" });
+            }
+        });
     });
-});
 }
+
 
 module.exports = {
     getAllPosts,

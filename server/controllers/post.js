@@ -136,8 +136,6 @@ const addPostImage = (req, res) => {
 
         var params = {
             Bucket: process.env.BUCKET_NAME,
-            // Key: file.name,
-            // Key: (uuidv4() + "." + fileExtension),    // uuid key for the image
             Key: postID,    // uuid key for the image
             Body: file.data,
         };

@@ -27,8 +27,8 @@ const WritePost = () => {
     setUploadMessage(); // Clear upload message
     setErrorMessage(); // Clear error message
     let file = e.target.files[0];
-    if (file != undefined) {
-      // If file is not empty
+    
+    if (file != undefined) { // If file is not empty
       setImagePreview(URL.createObjectURL(file));
       setImageSelected(true);
     } else {

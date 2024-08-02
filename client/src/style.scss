@@ -713,6 +713,16 @@ $lightGreen: #b9e7e7;
       font-family: "Jura";
       font-size: 20px;
       margin-top: 16px;
+      color: green;
+      font-weight: 600;
+    }
+
+    .error-message {
+      font-family: "Jura";
+      font-size: 25px;
+      margin-top: 16px;
+      color: red;
+      font-weight: 600;
     }
   }
 

@@ -18,8 +18,10 @@ const Guess = () => {
     const [markerKey, setMarkerKey] = useState(0);
     const [coordinates, setCoordinates] = useState(null);
     const [showCoordinates, setShowCoordinates] = useState(false);
+
     const [distance, setDistance] = useState("N/A");
     const [score, setScore] = useState(0);
+    const [submitStatus, setSubmitStatus] = useState();
 
     // For navigating between the three panels
     const [selectedPanel, setSelectedPanel] = useState(null);
@@ -30,8 +32,9 @@ const Guess = () => {
         }
     }
 
-
     const onClickMap = (e) => {
+        setSubmitStatus() // Clear previous messages
+
         setMarkerPosition({
             lat: e.latLng.lat(),
             lng: e.latLng.lng(),
@@ -65,6 +68,19 @@ const Guess = () => {
             .catch((err) => console.log(err))
     };
 
+    function handleGuessSubmission(e) {
+        // insert user_ID later when user functionalities has been implemented
+        axios
+            .post('/make_guess/', { lat: markerPosition.lat, lng: markerPosition.lng })
+            .then((res) => {
+                setSubmitStatus("Guess successfully submitted!")
+            })
+            .catch((err) => {
+                setSubmitStatus("Guess submission unsuccessfully!")
+                // TODO: better error handling
+                console.log(err);
+            })
+    }
 
     // For the actual website we'll make a call to the backend to get images dynamically
     const dummy_posts = [
@@ -106,28 +122,31 @@ const Guess = () => {
                     </div>
 
                     {selectedPanel === 'map' &&
-                        <div className="home-post">
-                            <div className="rectangle">
-                                <div className="image">
-                                    <GoogleMap
-                                        center={center}
-                                        zoom={2.5}
-                                        mapContainerClassName='guess-panel-container'
-                                        options={{
-                                            streetViewControl: false,
-                                            fullscreenControl: false,
-                                            gestureHandling: 'greedy',
-                                            minZoom: 2.5,
-                                        }}
-                                        onLoad={map => setMap(map)}
-                                        onClick={onClickMap}
-                                    >
-                                        <Marker key={markerKey} position={markerKey ? markerPosition : { lat: null, lng: null }} />
-                                    </GoogleMap>
+                        <div>
+                            <div className="home-post">
+                                <div className="rectangle">
+                                    <div className="image">
+                                        <GoogleMap
+                                            center={center}
+                                            zoom={2.5}
+                                            mapContainerClassName='guess-panel-container'
+                                            options={{
+                                                streetViewControl: false,
+                                                fullscreenControl: false,
+                                                gestureHandling: 'greedy',
+                                                minZoom: 2.5,
+                                            }}
+                                            onLoad={map => setMap(map)}
+                                            onClick={onClickMap}
+                                        >
+                                            <Marker key={markerKey} position={markerKey ? markerPosition : { lat: null, lng: null }} />
+                                        </GoogleMap>
+                                    </div>
+                                    <div className="text-wrapper">long: {markerPosition.lat.toFixed(2)}</div>
+                                    <div className="text-wrapper-2">lat: {markerPosition.lng.toFixed(2)}</div>
                                 </div>
-                                <div className="text-wrapper">long: {markerPosition.lat.toFixed(2)}</div>
-                                <div className="text-wrapper-2">lat: {markerPosition.lng.toFixed(2)}</div>
                             </div>
+                            <button onClick={handleGuessSubmission}>SUBMIT</button>
                         </div>
                     }
                     {(selectedPanel === 'map' && showCoordinates) && (
@@ -139,6 +158,7 @@ const Guess = () => {
                     {selectedPanel === 'post' && <><div className='guess-panel-container'>Post</div></>}
                     {selectedPanel === 'leaderboard' && <><div className='guess-panel-container'>Leaderboard</div></>}
                     <p> Distance: {Math.round(distance)} km, Score: {Math.round(score)} pts</p>
+                    {submitStatus && <p className="upload-message">{submitStatus}</p>}
                 </div>
             </>
         );

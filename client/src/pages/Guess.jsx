@@ -39,16 +39,18 @@ const Guess = () => {
         setMarkerKey(markerKey + 1);
         setShowCoordinates(false);
         setCoordinates({ lat: e.latLng.lat(), lng: e.latLng.lng() });
-        axios
-            .post('/make_guess/process_guess', { lat: e.latLng.lat(), lng: e.latLng.lng() })
-            .then((res) => {
-                setDistance(res.data.distance);
-                setScore(res.data.score);
-            })
-            .catch((err) => {
-                // TODO: better error handling
-                console.log(err);
-            })
+
+        // Score calculation for later
+        // axios
+        //     .post('/make_guess/process_guess', { lat: e.latLng.lat(), lng: e.latLng.lng() })
+        //     .then((res) => {
+        //         setDistance(res.data.distance);
+        //         setScore(res.data.score);
+        //     })
+        //     .catch((err) => {
+        //         // TODO: better error handling
+        //         console.log(err);
+        //     })
     };
 
     const updateCoordinates = (e) => {
@@ -104,21 +106,29 @@ const Guess = () => {
                     </div>
 
                     {selectedPanel === 'map' &&
-                        <GoogleMap
-                            center={center}
-                            zoom={2.5}
-                            mapContainerClassName='guess-panel-container'
-                            options={{
-                                streetViewControl: false,
-                                fullscreenControl: false,
-                                gestureHandling: 'greedy',
-                                minZoom: 2.5,
-                            }}
-                            onLoad={map => setMap(map)}
-                            onClick={onClickMap}
-                        >
-                            <Marker key={markerKey} position={markerKey ? markerPosition : { lat: null, lng: null }} />
-                        </GoogleMap>
+                        <div className="home-post">
+                            <div className="rectangle">
+                                <div className="image">
+                                    <GoogleMap
+                                        center={center}
+                                        zoom={2.5}
+                                        mapContainerClassName='guess-panel-container'
+                                        options={{
+                                            streetViewControl: false,
+                                            fullscreenControl: false,
+                                            gestureHandling: 'greedy',
+                                            minZoom: 2.5,
+                                        }}
+                                        onLoad={map => setMap(map)}
+                                        onClick={onClickMap}
+                                    >
+                                        <Marker key={markerKey} position={markerKey ? markerPosition : { lat: null, lng: null }} />
+                                    </GoogleMap>
+                                </div>
+                                <div className="text-wrapper">long: {markerPosition.lat.toFixed(2)}</div>
+                                <div className="text-wrapper-2">lat: {markerPosition.lng.toFixed(2)}</div>
+                            </div>
+                        </div>
                     }
                     {(selectedPanel === 'map' && showCoordinates) && (
                         <div>

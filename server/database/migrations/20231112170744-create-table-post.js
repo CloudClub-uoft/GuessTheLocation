@@ -19,7 +19,7 @@ exports.up = function(db, callback) {
     "post",
     {
       userID: { type: "int", notNull: true },
-      postID: { type: "int", notNull: true },
+      postID: { type: "string", notNull: true },
       locationLat: { type: "float", notNull: true },
       locationLong: { type: "float", notNull: true },
       postTime: { type: "timestamp", notNull: true }
